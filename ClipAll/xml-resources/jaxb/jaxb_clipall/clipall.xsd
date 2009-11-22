@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="categories" type="categories"/>
+
+  <xs:complexType name="categories">
+    <xs:sequence>
+      <xs:element name="categories" type="category" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="category">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="items" type="item" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="maxItemCount" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="item">
+    <xs:sequence>
+      <xs:element name="bookmark" type="xs:string" minOccurs="0"/>
+      <xs:element name="item" type="xs:string" minOccurs="0"/>
+      <xs:element name="type" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="flavorTYPES"/>
+
+  <xs:complexType name="constants"/>
+</xs:schema>
+
