@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="clipall_ant_tasks" default="all" basedir=".">
+
+    <property name="izpack_root" value="C:/Program Files/IzPack"/>
+
+    <target name="all">
+    </target>
+    <!-- compile ../sample/install.xml -b ../sample -->
+    <target name="create_installer">
+        <exec executable="cmd">
+            <arg value="/c"/>
+            <arg value="${izpack_root}/bin/compile.bat"/>
+            <arg value="install.xml"/>
+        </exec>
+    </target>
+
+</project>

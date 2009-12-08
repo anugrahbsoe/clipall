@@ -16,6 +16,8 @@
 package dev.clipall.business.systray;
 
 import dev.clipall.Constants;
+import dev.clipall.business.GenericLogic;
+import dev.clipall.business.GenericMediator;
 import dev.clipall.business.autostart.AutoStart;
 import dev.utils.log.Logger;
 import java.awt.Image;
@@ -89,6 +91,7 @@ public class DefaultSystemTray {
             }
         };
 
+        addSearchPanelDisplayerItem();
         addStartupSwitcherItem();
         addExitItem();
 
@@ -97,8 +100,8 @@ public class DefaultSystemTray {
         ActionListener actionListener = new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                trayIcon.displayMessage("Caption",
-                        "An Action Event Has Been Peformed!",
+                trayIcon.displayMessage("Check For New Version..",
+                        "http://code.google.com/p/clipall/downloads/list",
                         TrayIcon.MessageType.INFO);
             }
         };
@@ -139,12 +142,26 @@ public class DefaultSystemTray {
         ActionListener exitListener = new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {                
-                System.exit(0);
+                GenericLogic.getInstance().exitApplication();
             }
         };
 
         MenuItem defaultItem = new MenuItem("Exit");
         defaultItem.addActionListener(exitListener);
+        popupMenu.add(defaultItem);
+    }
+
+    private void addSearchPanelDisplayerItem() {
+
+        ActionListener displayerListener = new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                GenericMediator.getInstance().displaySearchPanel();
+            }
+        };
+
+        MenuItem defaultItem = new MenuItem("Search History");
+        defaultItem.addActionListener(displayerListener);
         popupMenu.add(defaultItem);
     }
 }

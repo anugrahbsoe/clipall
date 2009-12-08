@@ -61,5 +61,7 @@ public class HotKeyLogic implements HotkeyListener {
         JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_WIN, (int)'A');
     }
 
-    
+    public void cleanup(){
+        JIntellitype.getInstance().cleanUp();
+    }
 }

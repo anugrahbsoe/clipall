@@ -128,4 +128,10 @@ public class GenericLogic {
         Categories categories = Categories.createDefaultInstance();
         GenericModel.getInstance().setCategories(categories);
     }
+
+    public void exitApplication(){
+
+        HotKeyLogic.getInstance().cleanup();
+        System.exit(0);
+    }
 }

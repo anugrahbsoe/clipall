@@ -1,0 +1,1 @@
+just enjoy using extensive features of clipall :)

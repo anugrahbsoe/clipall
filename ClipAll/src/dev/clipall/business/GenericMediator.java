@@ -21,6 +21,7 @@ import dev.clipall.model.Category;
 import dev.clipall.model.GenericModel;
 import dev.clipall.model.Item;
 import dev.clipall.utils.Utils;
+import dev.clipall.view.SearchFrame;
 import dev.clipall.view.SearchPanel;
 import java.io.File;
 import java.util.List;
@@ -98,4 +99,8 @@ public class GenericMediator extends Constants {
         SearchPanel.getInstance().updateSearchPanelFields();
     }
 
+    public void displaySearchPanel(){
+        SearchFrame.getInstance().displaySearchFrame();
+    }
+    
 }
