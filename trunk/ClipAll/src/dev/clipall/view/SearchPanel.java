@@ -59,34 +59,80 @@ public class SearchPanel extends javax.swing.JPanel {
         jSearchField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jSearchList = new javax.swing.JList();
+        jPanel1 = new javax.swing.JPanel();
         jCategoryLabel = new javax.swing.JLabel();
+        jCategoryUpLabel = new javax.swing.JLabel();
+        jCategoryDownLabel = new javax.swing.JLabel();
         jButtonNewKategory = new javax.swing.JButton();
         jButtonSave = new javax.swing.JButton();
         jButtonDeleteItem = new javax.swing.JButton();
 
+        setMinimumSize(new java.awt.Dimension(300, 180));
+
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        jSearchList.setMaximumSize(new java.awt.Dimension(32767, 32767));
         jScrollPane1.setViewportView(jSearchList);
 
-        jCategoryLabel.setBackground(new java.awt.Color(153, 153, 255));
-        jCategoryLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jCategoryLabel.setOpaque(true);
+        jPanel1.setLayout(null);
 
-        jButtonNewKategory.setText("Kategori");
+        jCategoryLabel.setBackground(new java.awt.Color(153, 153, 255));
+        jCategoryLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCategoryLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jCategoryLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jCategoryLabel.setOpaque(true);
+        jPanel1.add(jCategoryLabel);
+        jCategoryLabel.setBounds(30, 0, 180, 23);
+
+        jCategoryUpLabel.setBackground(new java.awt.Color(255, 153, 153));
+        jCategoryUpLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jCategoryUpLabel.setIcon(new javax.swing.ImageIcon("D:\\dev\\projects\\sprojects\\ClipAll\\resources\\images\\up.png")); // NOI18N
+        jCategoryUpLabel.setMaximumSize(new java.awt.Dimension(22, 24));
+        jCategoryUpLabel.setMinimumSize(new java.awt.Dimension(22, 24));
+        jCategoryUpLabel.setPreferredSize(new java.awt.Dimension(22, 24));
+        jCategoryUpLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCategoryUpLabelMouseClicked(evt);
+            }
+        });
+        jPanel1.add(jCategoryUpLabel);
+        jCategoryUpLabel.setBounds(4, 0, 26, 24);
+
+        jCategoryDownLabel.setBackground(new java.awt.Color(255, 153, 153));
+        jCategoryDownLabel.setIcon(new javax.swing.ImageIcon("D:\\dev\\projects\\sprojects\\ClipAll\\resources\\images\\down.png")); // NOI18N
+        jCategoryDownLabel.setIconTextGap(0);
+        jCategoryDownLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCategoryDownLabelMouseClicked(evt);
+            }
+        });
+        jPanel1.add(jCategoryDownLabel);
+        jCategoryDownLabel.setBounds(210, 0, 30, 24);
+
+        jButtonNewKategory.setText("New Category");
+        jButtonNewKategory.setMargin(new java.awt.Insets(2, 7, 2, 7));
         jButtonNewKategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNewKategoryActionPerformed(evt);
             }
         });
 
-        jButtonSave.setText("Kaydet");
+        jButtonSave.setText("Save");
+        jButtonSave.setMargin(new java.awt.Insets(2, 7, 2, 7));
+        jButtonSave.setMaximumSize(new java.awt.Dimension(89, 23));
+        jButtonSave.setMinimumSize(new java.awt.Dimension(89, 23));
+        jButtonSave.setPreferredSize(new java.awt.Dimension(89, 23));
         jButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSaveActionPerformed(evt);
             }
         });
 
-        jButtonDeleteItem.setText("Sil");
+        jButtonDeleteItem.setText("Delete");
+        jButtonDeleteItem.setMargin(new java.awt.Insets(2, 7, 2, 7));
+        jButtonDeleteItem.setMaximumSize(new java.awt.Dimension(89, 23));
+        jButtonDeleteItem.setMinimumSize(new java.awt.Dimension(89, 23));
+        jButtonDeleteItem.setPreferredSize(new java.awt.Dimension(89, 23));
         jButtonDeleteItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDeleteItemActionPerformed(evt);
@@ -100,14 +146,14 @@ public class SearchPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCategoryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                         .addComponent(jButtonNewKategory)
-                        .addGap(35, 35, 35)
-                        .addComponent(jButtonSave)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonDeleteItem))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
                     .addComponent(jSearchField, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE))
                 .addContainerGap())
@@ -115,17 +161,20 @@ public class SearchPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jCategoryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonNewKategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonSave)
-                        .addComponent(jButtonDeleteItem)))
-                .addGap(9, 9, 9)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonDeleteItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonNewKategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(9, 9, 9))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -146,6 +195,14 @@ public class SearchPanel extends javax.swing.JPanel {
         deleteItem();
     }//GEN-LAST:event_jButtonDeleteItemActionPerformed
 
+    private void jCategoryDownLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCategoryDownLabelMouseClicked
+        GenericModel.getInstance().setNextCategory();
+    }//GEN-LAST:event_jCategoryDownLabelMouseClicked
+
+    private void jCategoryUpLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCategoryUpLabelMouseClicked
+        GenericModel.getInstance().setPreviousCategory();
+    }//GEN-LAST:event_jCategoryUpLabelMouseClicked
+
     private void deleteItem(){
 
         int selectedIndex = jSearchList.getSelectedIndex();
@@ -164,7 +221,10 @@ public class SearchPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButtonDeleteItem;
     private javax.swing.JButton jButtonNewKategory;
     private javax.swing.JButton jButtonSave;
+    private javax.swing.JLabel jCategoryDownLabel;
     private javax.swing.JLabel jCategoryLabel;
+    private javax.swing.JLabel jCategoryUpLabel;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jSearchField;
     private javax.swing.JList jSearchList;
