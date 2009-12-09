@@ -26,8 +26,6 @@ public class WindowsPlatform extends Platform{
 
     @Override
     public void paste() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
-
 
 }
