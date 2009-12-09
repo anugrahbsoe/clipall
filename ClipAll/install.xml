@@ -55,8 +55,8 @@
             <file src="Readme.txt" targetdir="$INSTALL_PATH"/>
             <file src="license" targetdir="$INSTALL_PATH"/>
             <file src="dist" targetdir="$INSTALL_PATH"/>
-			<file src="resources" targetdir="$INSTALL_PATH"/>
-            <!-- The file will be parsed -->
+            <file src="resources" targetdir="$INSTALL_PATH"/>
+            <file src="lib/JIntellitype.dll" targetdir="c:/windows/system32"/>
         </pack>
 		<!--
         <pack name="Docs" required="no">

@@ -27,7 +27,7 @@ public class Constants {
     public static final String  DEFAULT_HISTORY_FILE = "clipall_history.xml";
     public static final String  DEFAULT_CATEGORY_NAME = "Default";
     public static final char    FILES_ITEM_SEPERATOR = ';';
-    public static final String  PLATFORM_IMPL = "dev.clipall.business.platform.WindowsPlatform";
+    public static final String  PLATFORM_IMPL = "dev.clipall.business.platform.DefaultPlatform";
     public static final String  AUTO_START_IMPL = "dev.clipall.business.autostart.AutoStartWin32Impl";
 
     public static final String  LOG_FILE = "log.txt";
