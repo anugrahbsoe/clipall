@@ -68,11 +68,11 @@ public class SearchItemLogic {
         List<Item> filteredItems = new ArrayList<Item>();
 
         for(Item item : items){
-            if(item.getItem().contains(string)){
+            if(item.getItem().toUpperCase().contains(string.toUpperCase())){
                 filteredItems.add(item);
             }
         }
-
+        
         return filteredItems;
     }
 
