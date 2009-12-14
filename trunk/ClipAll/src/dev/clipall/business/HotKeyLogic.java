@@ -39,7 +39,7 @@ public class HotKeyLogic implements HotkeyListener {
     public void onHotKey(int keyIdentifier) {
 
         System.out.println("key pressed");
-        if(Constants.Hotkeys.CTRL_i == keyIdentifier) {
+        if(Constants.Hotkeys.WIN_A == keyIdentifier) {
             System.out.println("ctrl + i  : is pressed");
             SearchFrame.getInstance().displaySearchFrame();
         }
@@ -58,10 +58,11 @@ public class HotKeyLogic implements HotkeyListener {
         
         // assign global hotkeys
         //JIntellitype.getInstance().registerSwingHotKey(Constants.Hotkeys.CTRL_i, Event.CTRL_MASK + Event.SHIFT_MASK, (int)'k');
-        JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_WIN, (int)'A');
+        JIntellitype.getInstance().registerHotKey(Constants.Hotkeys.WIN_A, JIntellitype.MOD_WIN, (int)'A');
     }
 
     public void cleanup(){
+        JIntellitype.getInstance().unregisterHotKey(Constants.Hotkeys.WIN_A);
         JIntellitype.getInstance().cleanUp();
     }
 }

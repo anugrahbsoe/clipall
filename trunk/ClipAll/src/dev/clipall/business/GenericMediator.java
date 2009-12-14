@@ -77,12 +77,12 @@ public class GenericMediator extends Constants {
         SearchPanel.getInstance().updateJSearchList();
     }
 
-    public void enterPressedOnSearchListEvent() {
+    public void enterPressedOnSearchListEvent(String searchedItem) {
 
-        Item selectedItem = 
-        GenericModel.getInstance().getCurrentCategory().getItems().get(
+        Item selectedItem = GenericModel.getInstance().
+                getSearchListItemsOfCurrentCategory(searchedItem).get(
                             SearchPanel.getInstance().getSelectedItemIndex());
-
+                            
         itemsToClipboardEvent(selectedItem);
 
         ClipboardLogic.getInstance().setClipboard(selectedItem);
@@ -94,6 +94,17 @@ public class GenericMediator extends Constants {
 
         Category category = new Category(categoryName);
         category = GenericModel.getInstance().getCategories().addNewCategory(category);
+        GenericModel.getInstance().setCurrentCategory(category);
+
+        SearchPanel.getInstance().updateSearchPanelFields();
+    }
+
+    public void deleteCurrentCategory(){
+
+        Category category = GenericModel.getInstance().getCurrentCategory();
+        GenericModel.getInstance().getCategories().deleteCategory(category);
+
+        category = GenericModel.getInstance().getFirstCategory();
         GenericModel.getInstance().setCurrentCategory(category);
 
         SearchPanel.getInstance().updateSearchPanelFields();

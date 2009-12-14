@@ -39,11 +39,30 @@ public class Categories {
     }
 
     public Category addNewCategory(Category category){
-                      
+        
+        return addNewCategory(category, false);
+    }
+
+    public Category addNewCategory(Category category, boolean overwrite){
+        
         if(categories.contains(category)){
-            category = categories.get(categories.indexOf(category));
+            if(overwrite){
+                categories.set(categories.indexOf(category), category);
+            } else {
+                category = categories.get(categories.indexOf(category));
+            }
         } else {
-            categories.add(category);            
+            categories.add(category);
+        }
+
+        return category;
+    }
+
+    public Category deleteCategory(Category category){
+
+        categories.remove(category);
+        if(categories.isEmpty()){
+            addNewCategory(Category.createDefaultCategory());
         }
 
         return category;

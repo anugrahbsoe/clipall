@@ -31,12 +31,15 @@ public class Constants {
     public static final String  AUTO_START_IMPL = "dev.clipall.business.autostart.AutoStartWin32Impl";
 
     public static final String  LOG_FILE = "log.txt";
-    public static final String  DEFAULT_APP_FILE_NAME = "ClipAll.bat";
+    public static final String  DEFAULT_APP_FILE_NAME = "ClipAll.jar";
     public static final String  APP_LAUNCHER_FILE = GenericLogic.getInstance().launcherFile();
+
+    public static final String  UPDATE_PAGE = "http://code.google.com/p/clipall/downloads/list";
+    public static final String  HOME_PAGE   = "http://code.google.com/p/clipall";
 
     public class Resources {
 
-        public static final String SYSTEM_TRAY_ICON = "../resources/images/systray.gif";
+        public static final String SYSTEM_TRAY_ICON = "/resources/images/console.png";
     }
 
     public class Win32 {
@@ -57,6 +60,6 @@ public class Constants {
 
     public class Hotkeys {
 
-        public static final int CTRL_i = 1;
+        public static final int WIN_A = 1;
     }
 }

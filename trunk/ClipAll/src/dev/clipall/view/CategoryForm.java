@@ -15,7 +15,9 @@
 
 package dev.clipall.view;
 
+import dev.clipall.Constants;
 import dev.clipall.business.GenericMediator;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -33,6 +35,11 @@ public class CategoryForm extends javax.swing.JFrame {
         JPanel contentPanel = new JPanel();
         setContentPane(contentPanel);
         initComponents();
+        setLocationRelativeTo(SearchFrame.getInstance());
+        try {
+            setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Constants.Resources.SYSTEM_TRAY_ICON)));
+        } catch(Exception ex){}
+
         contentPanel.registerKeyboardAction(new EscapeKeyActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JPanel.WHEN_IN_FOCUSED_WINDOW);
     }
 
@@ -49,10 +56,17 @@ public class CategoryForm extends javax.swing.JFrame {
         jTextCategoryName = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setTitle("Yeni Kategori");
+        setTitle("New Category");
         setAlwaysOnTop(true);
+        setResizable(false);
 
         jLabel1.setText("Category Name");
+
+        jTextCategoryName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextCategoryNameKeyPressed(evt);
+            }
+        });
 
         jButton1.setText("Create");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -66,24 +80,25 @@ public class CategoryForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jTextCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addComponent(jButton1)
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -97,13 +112,21 @@ public class CategoryForm extends javax.swing.JFrame {
         hideCategoryForm();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jTextCategoryNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextCategoryNameKeyPressed
+        if(KeyEvent.VK_ENTER == evt.getKeyCode()){
+            String categoryName = jTextCategoryName.getText();
+            GenericMediator.getInstance().createNewCategory(categoryName);
+
+            hideCategoryForm();
+        }
+    }//GEN-LAST:event_jTextCategoryNameKeyPressed
+
     public static void displayNewInstance(){
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
                 CategoryForm categoryForm = new CategoryForm();
-                categoryForm.setVisible(true);
-                //categoryForm.toFront();
+                categoryForm.setVisible(true);                
             }
         });
     }

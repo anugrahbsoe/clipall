@@ -39,7 +39,7 @@ public class SearchPanel extends javax.swing.JPanel {
     private static SearchPanel searchPanel = new SearchPanel();
 
     private SearchPanel(){
-        initComponents();
+        initComponents();        
         setListeners();
     }
 
@@ -56,6 +56,9 @@ public class SearchPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bookmarkPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jBookmarkField = new javax.swing.JTextField();
         jSearchField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jSearchList = new javax.swing.JList();
@@ -69,24 +72,70 @@ public class SearchPanel extends javax.swing.JPanel {
 
         setMinimumSize(new java.awt.Dimension(300, 180));
 
+        bookmarkPanel.setPreferredSize(new java.awt.Dimension(565, 24));
+
+        jLabel1.setText("Bookmark");
+
+        jBookmarkField.setEditable(false);
+        jBookmarkField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jBookmarkFieldMouseClicked(evt);
+            }
+        });
+        jBookmarkField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jBookmarkFieldFocusLost(evt);
+            }
+        });
+        jBookmarkField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jBookmarkFieldKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout bookmarkPanelLayout = new javax.swing.GroupLayout(bookmarkPanel);
+        bookmarkPanel.setLayout(bookmarkPanelLayout);
+        bookmarkPanelLayout.setHorizontalGroup(
+            bookmarkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bookmarkPanelLayout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jBookmarkField, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE))
+        );
+        bookmarkPanelLayout.setVerticalGroup(
+            bookmarkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bookmarkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addComponent(jBookmarkField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jSearchList.setMaximumSize(new java.awt.Dimension(32767, 32767));
+        jSearchList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jSearchListMouseClicked(evt);
+            }
+        });
+        jSearchList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jSearchListValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(jSearchList);
 
         jPanel1.setLayout(null);
 
-        jCategoryLabel.setBackground(new java.awt.Color(153, 153, 255));
         jCategoryLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jCategoryLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jCategoryLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(93, 93, 214), 1, true));
         jCategoryLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jCategoryLabel.setOpaque(true);
         jPanel1.add(jCategoryLabel);
-        jCategoryLabel.setBounds(30, 0, 180, 23);
+        jCategoryLabel.setBounds(30, 0, 190, 23);
 
         jCategoryUpLabel.setBackground(new java.awt.Color(255, 153, 153));
         jCategoryUpLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jCategoryUpLabel.setIcon(new javax.swing.ImageIcon("D:\\dev\\projects\\sprojects\\ClipAll\\resources\\images\\up.png")); // NOI18N
+        jCategoryUpLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrow_top.png"))); // NOI18N
         jCategoryUpLabel.setMaximumSize(new java.awt.Dimension(22, 24));
         jCategoryUpLabel.setMinimumSize(new java.awt.Dimension(22, 24));
         jCategoryUpLabel.setPreferredSize(new java.awt.Dimension(22, 24));
@@ -96,10 +145,10 @@ public class SearchPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jCategoryUpLabel);
-        jCategoryUpLabel.setBounds(4, 0, 26, 24);
+        jCategoryUpLabel.setBounds(10, 0, 20, 24);
 
         jCategoryDownLabel.setBackground(new java.awt.Color(255, 153, 153));
-        jCategoryDownLabel.setIcon(new javax.swing.ImageIcon("D:\\dev\\projects\\sprojects\\ClipAll\\resources\\images\\down.png")); // NOI18N
+        jCategoryDownLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrow_down.png"))); // NOI18N
         jCategoryDownLabel.setIconTextGap(0);
         jCategoryDownLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -107,7 +156,7 @@ public class SearchPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jCategoryDownLabel);
-        jCategoryDownLabel.setBounds(210, 0, 30, 24);
+        jCategoryDownLabel.setBounds(220, 0, 20, 20);
 
         jButtonNewKategory.setText("New Category");
         jButtonNewKategory.setMargin(new java.awt.Insets(2, 7, 2, 7));
@@ -145,36 +194,36 @@ public class SearchPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bookmarkPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonNewKategory)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
-                    .addComponent(jSearchField, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE))
+                    .addComponent(jSearchField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonDeleteItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonNewKategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(9, 9, 9))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonNewKategory, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bookmarkPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -186,7 +235,7 @@ public class SearchPanel extends javax.swing.JPanel {
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                GenericLogic.getInstance().saveToXML(Constants.DEFAULT_HISTORY_FILE);
+                GenericLogic.getInstance().saveTheCurrentCategory(Constants.DEFAULT_HISTORY_FILE);
             }
         });
     }//GEN-LAST:event_jButtonSaveActionPerformed
@@ -203,11 +252,64 @@ public class SearchPanel extends javax.swing.JPanel {
         GenericModel.getInstance().setPreviousCategory();
     }//GEN-LAST:event_jCategoryUpLabelMouseClicked
 
-    private void deleteItem(){
+    private void jSearchListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchListMouseClicked
+        if(evt.getClickCount() == 2 && evt.isConsumed() == false){
+            evt.consume();
+            GenericMediator.getInstance().enterPressedOnSearchListEvent(jSearchField.getText());
+        }
+    }//GEN-LAST:event_jSearchListMouseClicked
+
+    private void jBookmarkFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jBookmarkFieldKeyPressed
+
+        if(KeyEvent.VK_ENTER == evt.getKeyCode()){
+
+            String bookmark = jBookmarkField.getText();
+            Item item = getSelectedItem();
+            if(item == null){
+                jBookmarkField.setText("");
+                return;
+            }
+
+            item.setBookmark(bookmark);
+
+            jBookmarkField.setEditable(false);
+        }
+    }//GEN-LAST:event_jBookmarkFieldKeyPressed
+
+    private void jBookmarkFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBookmarkFieldMouseClicked
+        if(evt.getClickCount() == 2 && evt.isConsumed() == false){
+            evt.consume();
+            if(getSelectedItem() != null){
+                jBookmarkField.setEditable(true);
+            }
+        }
+    }//GEN-LAST:event_jBookmarkFieldMouseClicked
+
+    private void jSearchListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jSearchListValueChanged
+
+        setCurrentBookmark();
+    }//GEN-LAST:event_jSearchListValueChanged
+
+    private void jBookmarkFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jBookmarkFieldFocusLost
+        jBookmarkField.setEditable(false);
+    }//GEN-LAST:event_jBookmarkFieldFocusLost
+
+    public void setCurrentBookmark(){
+
+        Item item = getSelectedItem();
+        if(item == null){
+            jBookmarkField.setText("");
+            return;
+        }
+
+        jBookmarkField.setText(item.getBookmark());
+    }
+
+    public void deleteItem(){
 
         int selectedIndex = jSearchList.getSelectedIndex();
         if(selectedIndex >= 0){
-            Item item = GenericModel.getInstance().getSearchListItemsOfCurrentCategory(jSearchField.getText()).get(selectedIndex);
+            Item item = getSelectedItem();
             GenericMediator.getInstance().deleteItemEvent(item);
         }
 
@@ -217,13 +319,27 @@ public class SearchPanel extends javax.swing.JPanel {
         }        
     }
 
+    public Item getSelectedItem(){
+
+        int selectedIndex = jSearchList.getSelectedIndex();
+        Item item = null;
+        if(selectedIndex >= 0){
+            item = GenericModel.getInstance().getSearchListItemsOfCurrentCategory(jSearchField.getText()).get(selectedIndex);
+        }
+
+        return item;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bookmarkPanel;
+    private javax.swing.JTextField jBookmarkField;
     private javax.swing.JButton jButtonDeleteItem;
     private javax.swing.JButton jButtonNewKategory;
     private javax.swing.JButton jButtonSave;
     private javax.swing.JLabel jCategoryDownLabel;
     private javax.swing.JLabel jCategoryLabel;
     private javax.swing.JLabel jCategoryUpLabel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jSearchField;
@@ -304,7 +420,7 @@ public class SearchPanel extends javax.swing.JPanel {
 
         public void keyPressed(KeyEvent e) {
             if(KeyEvent.VK_ENTER == e.getKeyCode()){
-                GenericMediator.getInstance().enterPressedOnSearchListEvent();
+                GenericMediator.getInstance().enterPressedOnSearchListEvent(jSearchField.getText());
             } else if(KeyEvent.VK_DELETE == e.getKeyCode()){
                 deleteItem();
             }
@@ -333,7 +449,7 @@ public class SearchPanel extends javax.swing.JPanel {
         public void actionPerformed(ActionEvent e) {
 
             if(KeyEvent.VK_UP == key){
-
+                
                 GenericModel.getInstance().setPreviousCategory();
 
             } else if(KeyEvent.VK_DOWN == key){
