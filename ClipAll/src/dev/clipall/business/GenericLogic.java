@@ -17,6 +17,7 @@ package dev.clipall.business;
 
 import dev.clipall.Constants;
 import dev.clipall.model.Categories;
+import dev.clipall.model.Category;
 import dev.clipall.model.GenericModel;
 import dev.utils.io.FileHelper;
 import dev.utils.log.Logger;
@@ -60,10 +61,23 @@ public class GenericLogic {
         }
 
         loadFromXML(Constants.DEFAULT_HISTORY_FILE);
-
     }
 
     public void loadFromXML(String historyFile) {
+
+        Categories categories = newCategoriesInstance(historyFile);
+        GenericModel.getInstance().setCategories(categories);
+    }
+
+    public void loadFromXML(File historyFile) {
+
+        Categories categories = newCategoriesInstance(historyFile);
+        GenericModel.getInstance().setCategories(categories);
+    }
+
+    public Categories newCategoriesInstance(File historyFile){
+
+        Categories categories = null;        
 
         try {
 
@@ -75,27 +89,70 @@ public class GenericLogic {
             dev.clipall.model.jaxb.Categories jaxbCategories =
                     (dev.clipall.model.jaxb.Categories) jaxbElement.getValue();
 
-            Categories categories = new Categories(jaxbCategories);
-            GenericModel.getInstance().setCategories(categories);
+            categories = new Categories(jaxbCategories);
 
-        } catch (Exception ex) {            
+        } catch (Exception ex) {
             Logger.getLogger().debug("ex: " + ex.toString() + " -- " +
                                     "default categories is being created...",
                                     GenericLogic.class);
-            setDefaultCategories();
+
+            categories = Categories.createDefaultInstance();
         }
+
+        return categories;
     }
 
-    public void saveToXML(String historyFile) {
+    public Categories newCategoriesInstance(String historyFile){
+                
+        if(historyFile == null){
+            historyFile = Constants.DEFAULT_HISTORY_FILE;
+        }
+
+        return newCategoriesInstance(new File(historyFile));
+    }
+
+    public void save(Categories categories, File historyFile){
+
+        if(historyFile == null){
+            historyFile = new File(Constants.DEFAULT_HISTORY_FILE);
+        }
 
         try {
             JAXBContext jc = JAXBContext.newInstance(Categories.class);
             Marshaller m = jc.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            m.marshal(GenericModel.getInstance().getCategories(), new File(historyFile));
+            m.marshal(categories, historyFile);
         } catch (JAXBException ex) {
             Logger.getLogger().error("", ex, getClass());
         }
+    }
+
+    public void save(Categories categories, String historyFile){
+
+        File file = null;
+        if(historyFile != null){
+            file = new File(historyFile);
+        }
+
+        save(categories, file);
+    }
+
+    public void saveAll(String historyFile) {
+
+        save(GenericModel.getInstance().getCategories(), historyFile);
+    }
+
+    public void saveAll(File historyFile){
+        save(GenericModel.getInstance().getCategories(), historyFile);
+    }
+
+    public void saveTheCurrentCategory(String historyFile){
+
+        Categories categories = newCategoriesInstance(historyFile);
+        Category currentCategory = GenericModel.getInstance().getCurrentCategory();
+        categories.addNewCategory(currentCategory, true);
+        
+        save(categories, historyFile);
     }
 
     public String launcherFile() {

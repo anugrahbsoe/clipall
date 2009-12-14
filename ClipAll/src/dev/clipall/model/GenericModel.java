@@ -43,6 +43,10 @@ public class GenericModel {
     
     //------------------------------------------------------
 
+    public Category getFirstCategory(){
+        return categories.getCategories().getFirst();
+    }
+
     public Category getNextCategory(){
         LinkedList<Category> categoryList = categories.getCategories();
         int index = categoryList.indexOf(currentCategory);

@@ -15,7 +15,13 @@
 
 package dev.clipall.view;
 
+import dev.clipall.Constants;
+import dev.clipall.business.GenericLogic;
+import dev.clipall.business.GenericMediator;
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
+import java.io.File;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -24,10 +30,15 @@ import java.awt.BorderLayout;
 public class SearchFrame extends javax.swing.JFrame {
 
     private static SearchFrame searchFrame = new SearchFrame();
-
+    
     private SearchFrame(){
         initComponents();
         getContentPane().add(SearchPanel.getInstance(), BorderLayout.CENTER);
+        
+        try {
+            setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Constants.Resources.SYSTEM_TRAY_ICON)));
+        } catch(Exception ex){}
+        
         pack();
     }
 
@@ -44,17 +55,187 @@ public class SearchFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fileChooser = new javax.swing.JFileChooser();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        menuItem_Save = new javax.swing.JMenuItem();
+        menuItem_SaveAll = new javax.swing.JMenuItem();
+        menuItem_SaveAllAs = new javax.swing.JMenuItem();
+        menuItem_LoadFromFile = new javax.swing.JMenuItem();
+        menuItem_Exit = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        menuItem_NewCategory = new javax.swing.JMenuItem();
+        menuItem_Delete = new javax.swing.JMenuItem();
+        menuItem_DeleteCategory = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        menuItem_CheckForUpdates = new javax.swing.JMenuItem();
+        menuItem_About = new javax.swing.JMenuItem();
+
+        fileChooser.setDialogTitle("History File Chooser");
+
         setTitle("ClipAll");
+
+        jMenu1.setText("File");
+
+        menuItem_Save.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        menuItem_Save.setText("Save");
+        menuItem_Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_SaveActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuItem_Save);
+
+        menuItem_SaveAll.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        menuItem_SaveAll.setText("Save All");
+        menuItem_SaveAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_SaveAllActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuItem_SaveAll);
+
+        menuItem_SaveAllAs.setText("Save All As ..");
+        menuItem_SaveAllAs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_SaveAllAsActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuItem_SaveAllAs);
+
+        menuItem_LoadFromFile.setText("Load From File");
+        menuItem_LoadFromFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_LoadFromFileActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuItem_LoadFromFile);
+
+        menuItem_Exit.setText("Exit");
+        menuItem_Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_ExitActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuItem_Exit);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+
+        menuItem_NewCategory.setText("New Category");
+        menuItem_NewCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_NewCategoryActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuItem_NewCategory);
+
+        menuItem_Delete.setText("Delete");
+        menuItem_Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_DeleteActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuItem_Delete);
+
+        menuItem_DeleteCategory.setText("Delete Category");
+        menuItem_DeleteCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_DeleteCategoryActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuItem_DeleteCategory);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Help");
+
+        menuItem_CheckForUpdates.setText("Check for Updates");
+        jMenu3.add(menuItem_CheckForUpdates);
+
+        menuItem_About.setText("About");
+        menuItem_About.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_AboutActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuItem_About);
+
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void menuItem_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_ExitActionPerformed
+        GenericLogic.getInstance().exitApplication();
+    }//GEN-LAST:event_menuItem_ExitActionPerformed
+
+    private void menuItem_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_SaveActionPerformed
+        GenericLogic.getInstance().saveTheCurrentCategory(null);
+    }//GEN-LAST:event_menuItem_SaveActionPerformed
+
+    private void menuItem_SaveAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_SaveAllActionPerformed
+        GenericLogic.getInstance().saveAll(Constants.DEFAULT_HISTORY_FILE);
+    }//GEN-LAST:event_menuItem_SaveAllActionPerformed
+
+    private void menuItem_SaveAllAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_SaveAllAsActionPerformed
+        int fcResult = fileChooser.showSaveDialog(this);
+
+        if(JFileChooser.APPROVE_OPTION == fcResult){
+            File file = fileChooser.getSelectedFile();
+            GenericLogic.getInstance().saveAll(file);
+        }
+    }//GEN-LAST:event_menuItem_SaveAllAsActionPerformed
+
+    private void menuItem_NewCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_NewCategoryActionPerformed
+        CategoryForm.displayNewInstance();
+    }//GEN-LAST:event_menuItem_NewCategoryActionPerformed
+
+    private void menuItem_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_DeleteActionPerformed
+        SearchPanel.getInstance().deleteItem();
+    }//GEN-LAST:event_menuItem_DeleteActionPerformed
+
+    private void menuItem_DeleteCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_DeleteCategoryActionPerformed
+        GenericMediator.getInstance().deleteCurrentCategory();
+    }//GEN-LAST:event_menuItem_DeleteCategoryActionPerformed
+
+    private void menuItem_AboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_AboutActionPerformed
+        AboutFrame.displayNewInstance();
+    }//GEN-LAST:event_menuItem_AboutActionPerformed
+
+    private void menuItem_LoadFromFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_LoadFromFileActionPerformed
+        int fcResult = fileChooser.showSaveDialog(this);
+
+        if(JFileChooser.APPROVE_OPTION == fcResult){
+            File file = fileChooser.getSelectedFile();
+            GenericLogic.getInstance().loadFromXML(file);
+            SearchPanel.getInstance().updateSearchPanelFields();
+        }
+    }//GEN-LAST:event_menuItem_LoadFromFileActionPerformed
+
     /**
     * @param args the command line arguments
-    */
-    
+    */    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFileChooser fileChooser;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem menuItem_About;
+    private javax.swing.JMenuItem menuItem_CheckForUpdates;
+    private javax.swing.JMenuItem menuItem_Delete;
+    private javax.swing.JMenuItem menuItem_DeleteCategory;
+    private javax.swing.JMenuItem menuItem_Exit;
+    private javax.swing.JMenuItem menuItem_LoadFromFile;
+    private javax.swing.JMenuItem menuItem_NewCategory;
+    private javax.swing.JMenuItem menuItem_Save;
+    private javax.swing.JMenuItem menuItem_SaveAll;
+    private javax.swing.JMenuItem menuItem_SaveAllAs;
     // End of variables declaration//GEN-END:variables
 
     

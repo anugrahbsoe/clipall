@@ -69,9 +69,11 @@ public class DefaultSystemTray {
     private void initSystemTray() {
 
         popupMenu = new PopupMenu();
-
-        SystemTray tray = SystemTray.getSystemTray();
-        Image image = Toolkit.getDefaultToolkit().getImage(Constants.Resources.SYSTEM_TRAY_ICON);
+        
+        Image image = null;
+        try {
+            image = Toolkit.getDefaultToolkit().getImage(getClass().getResource(Constants.Resources.SYSTEM_TRAY_ICON));
+        } catch(Exception ex){}
 
         MouseListener mouseListener = new MouseListener() {
 
@@ -95,13 +97,13 @@ public class DefaultSystemTray {
         addStartupSwitcherItem();
         addExitItem();
 
-        trayIcon = new TrayIcon(image, "Tray Demo", popupMenu);
+        trayIcon = new TrayIcon(image, "ClipAll", popupMenu);
 
         ActionListener actionListener = new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 trayIcon.displayMessage("Check For New Version..",
-                        "http://code.google.com/p/clipall/downloads/list",
+                        Constants.UPDATE_PAGE,
                         TrayIcon.MessageType.INFO);
             }
         };
@@ -132,9 +134,17 @@ public class DefaultSystemTray {
                 }
             }
         };
-                
+
+        // init startup String
+        boolean autostartEnabled = AutoStart.getInstance().autoStartEnabled();
+        if(autostartEnabled){
+            defaultItem.setLabel("DONOT Run On Windows Start");
+        } else {
+            defaultItem.setLabel("Run On Windows Start");
+        }
+
         defaultItem.addActionListener(startupSwitcher);
-        popupMenu.add(defaultItem);
+        popupMenu.add(defaultItem);        
     }
 
     private void addExitItem(){
