@@ -373,6 +373,10 @@ public class SearchPanel extends javax.swing.JPanel {
         CategoryForm.displayNewInstance();
     }
 
+    public void focusOnSearchTextField(){        
+        jSearchField.requestFocusInWindow();
+    }
+
     private void setListeners() {
 
         registerKeyboardAction(new EscapeKeyActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), WHEN_IN_FOCUSED_WINDOW);
