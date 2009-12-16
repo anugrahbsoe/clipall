@@ -41,7 +41,7 @@ public class HotKeyLogic implements HotkeyListener {
         System.out.println("key pressed");
         if(Constants.Hotkeys.WIN_A == keyIdentifier) {
             System.out.println("ctrl + i  : is pressed");
-            SearchFrame.getInstance().displaySearchFrame();
+            GenericMediator.getInstance().displaySearchPanel();
         }
     }
 

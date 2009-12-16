@@ -111,6 +111,7 @@ public class GenericMediator extends Constants {
     }
 
     public void displaySearchPanel(){
+        //SearchPanel.getInstance().focusOnSearchTextField();
         SearchFrame.getInstance().displaySearchFrame();
     }
     
