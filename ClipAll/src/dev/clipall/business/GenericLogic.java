@@ -19,10 +19,12 @@ import dev.clipall.Constants;
 import dev.clipall.model.Categories;
 import dev.clipall.model.Category;
 import dev.clipall.model.GenericModel;
+import dev.clipall.model.jaxb.dictionary.Dictionary;
 import dev.utils.io.FileHelper;
 import dev.utils.log.Logger;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBContext;
@@ -61,6 +63,8 @@ public class GenericLogic {
         }
 
         loadFromXML(Constants.DEFAULT_HISTORY_FILE);
+
+        loadDictionaries();
     }
 
     public void loadFromXML(String historyFile) {
@@ -84,7 +88,7 @@ public class GenericLogic {
             JAXBContext jc = JAXBContext.newInstance("dev.clipall.model.jaxb");
             Unmarshaller unmarshaller = jc.createUnmarshaller();
             JAXBElement jaxbElement = (JAXBElement) unmarshaller.unmarshal(
-                    new FileInputStream(historyFile));
+                                            new FileInputStream(historyFile));
 
             dev.clipall.model.jaxb.Categories jaxbCategories =
                     (dev.clipall.model.jaxb.Categories) jaxbElement.getValue();
@@ -109,6 +113,12 @@ public class GenericLogic {
         }
 
         return newCategoriesInstance(new File(historyFile));
+    }
+
+    private void loadDictionaries() {
+
+        LinkedList<Dictionary> dicts = DictionaryLogic.getInstance().loadDictionaries();
+        GenericModel.getInstance().setDictionaries(dicts);
     }
 
     public void save(Categories categories, File historyFile){
@@ -191,4 +201,5 @@ public class GenericLogic {
         HotKeyLogic.getInstance().cleanup();
         System.exit(0);
     }
+    
 }

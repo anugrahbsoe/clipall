@@ -27,5 +27,19 @@
         <copy todir="${build.generated.sources.dir}/jaxb">
             <fileset dir="build/generated/jaxbCache/jaxb_clipall"/>
         </copy>
+        <mkdir dir="build/generated/jaxbCache/jaxb_dictionary"/>
+        <xjc package="dev.clipall.model.jaxb.dictionary" destdir="build/generated/jaxbCache/jaxb_dictionary" catalog="catalog.xml">
+            <classpath>
+                <pathelement location="${src.dir}"/>
+                <pathelement path="${jaxbwiz.xjcrun.classpath}"/>
+            </classpath>
+            <arg value="-xmlschema"/>
+            <schema file="xml-resources/jaxb/jaxb_dictionary/dictionary.xsd"/>
+            <depends file="xml-resources/jaxb/jaxb_dictionary/dictionary.xsd"/>
+            <produces dir="build/generated/jaxbCache/jaxb_dictionary"/>
+        </xjc>
+        <copy todir="${build.generated.sources.dir}/jaxb">
+            <fileset dir="build/generated/jaxbCache/jaxb_dictionary"/>
+        </copy>
     </target>
 </project>

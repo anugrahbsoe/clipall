@@ -16,7 +16,7 @@
 package dev.clipall.model;
 
 import dev.clipall.business.GenericMediator;
-import dev.clipall.business.SearchItemLogic;
+import dev.clipall.model.jaxb.dictionary.Dictionary;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,10 +26,13 @@ import java.util.List;
  */
 public class GenericModel {
 
-
+    
     private Categories  categories;
     private Category    currentCategory;
     private List<Item>  searchListItems; // items that will be displayed in SearchPanel
+
+    private LinkedList<Dictionary> dictionaries;
+    private Dictionary currentDictionary;
 
     //------------------------------------------------------
 
@@ -72,18 +75,7 @@ public class GenericModel {
         currentCategory = getPreviousCategory();
         GenericMediator.getInstance().setPreviousCategoryEvent();
         return currentCategory;
-    }
-
-    public List<Item> getSearchListItemsOfCurrentCategory(String string) {
-
-        if(string.length() == 0){
-            return currentCategory.getItems();
-        }
-
-        return SearchItemLogic.getInstance().queryTheCurrentCategory(string);
-    }
-    
-    //------------------------------------------------------
+    }               
 
     public Categories getCategories() {
         return categories;
@@ -94,6 +86,40 @@ public class GenericModel {
         currentCategory = categories.getCategories().getFirst();
         setNextCategory(); // for the event creation
     }
+
+    //------------------------------------------------------
+
+    public void setDictionaries(LinkedList<Dictionary> dictionaries){
+        this.dictionaries = dictionaries;
+        if(dictionaries.isEmpty() == false){
+            currentDictionary = dictionaries.getFirst();
+        }
+    }
+    
+    public Dictionary getNextDictionary(){
+        int index = dictionaries.indexOf(currentDictionary);
+        index = (++ index) % dictionaries.size();
+        return dictionaries.get(index);
+    }
+    
+    public Dictionary getPreviousDictionary(){
+        int index = dictionaries.indexOf(currentDictionary);
+        index --;
+        index = index < 0 ? index + dictionaries.size() : index;
+        return dictionaries.get(index);
+    }
+
+    public Dictionary setPreviousDictionary(){
+        currentDictionary = getPreviousDictionary();
+        return currentDictionary;
+    }
+
+    public Dictionary setNextDictionary(){
+        currentDictionary = getNextDictionary();
+        return currentDictionary;
+    }
+
+    //------------------------------------------------------
 
     public Category getCurrentCategory() {
         return currentCategory;
@@ -109,6 +135,18 @@ public class GenericModel {
 
     public void setSearchListItems(List<Item> searchListItems) {
         this.searchListItems = searchListItems;
+    }
+
+    public List<Dictionary> getDictionaries() {
+        return dictionaries;
+    }
+
+    public Dictionary getCurrentDictionary() {
+        return currentDictionary;
+    }
+
+    public void setCurrentDictionary(Dictionary currentDictionary) {
+        this.currentDictionary = currentDictionary;
     }
     
 }

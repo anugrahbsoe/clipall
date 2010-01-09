@@ -15,16 +15,18 @@
 
 package dev.clipall.view;
 
-import dev.clipall.Constants;
-import dev.clipall.business.GenericLogic;
 import dev.clipall.business.GenericMediator;
+import dev.clipall.model.Category;
+import dev.clipall.model.ExtendedItem;
 import dev.clipall.model.GenericModel;
 import dev.clipall.model.Item;
+import dev.clipall.plugins.clipdb.QueryForm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
 import javax.swing.KeyStroke;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -41,6 +43,7 @@ public class SearchPanel extends javax.swing.JPanel {
     private SearchPanel(){
         initComponents();        
         setListeners();
+        setDBPluginListeners();
     }
 
     public static SearchPanel getInstance(){
@@ -67,8 +70,7 @@ public class SearchPanel extends javax.swing.JPanel {
         jCategoryUpLabel = new javax.swing.JLabel();
         jCategoryDownLabel = new javax.swing.JLabel();
         jButtonNewKategory = new javax.swing.JButton();
-        jButtonSave = new javax.swing.JButton();
-        jButtonDeleteItem = new javax.swing.JButton();
+        jAllCategoriesSearchCheckBox = new javax.swing.JCheckBox();
 
         setMinimumSize(new java.awt.Dimension(300, 180));
 
@@ -122,6 +124,11 @@ public class SearchPanel extends javax.swing.JPanel {
                 jSearchListValueChanged(evt);
             }
         });
+        jSearchList.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jSearchListFocusGained(evt);
+            }
+        });
         jScrollPane1.setViewportView(jSearchList);
 
         jPanel1.setLayout(null);
@@ -131,7 +138,7 @@ public class SearchPanel extends javax.swing.JPanel {
         jCategoryLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jCategoryLabel.setOpaque(true);
         jPanel1.add(jCategoryLabel);
-        jCategoryLabel.setBounds(30, 0, 190, 23);
+        jCategoryLabel.setBounds(20, 0, 189, 23);
 
         jCategoryUpLabel.setBackground(new java.awt.Color(255, 153, 153));
         jCategoryUpLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -145,7 +152,7 @@ public class SearchPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jCategoryUpLabel);
-        jCategoryUpLabel.setBounds(10, 0, 20, 24);
+        jCategoryUpLabel.setBounds(0, 0, 20, 24);
 
         jCategoryDownLabel.setBackground(new java.awt.Color(255, 153, 153));
         jCategoryDownLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrow_down.png"))); // NOI18N
@@ -156,7 +163,7 @@ public class SearchPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jCategoryDownLabel);
-        jCategoryDownLabel.setBounds(220, 0, 20, 20);
+        jCategoryDownLabel.setBounds(210, 0, 16, 22);
 
         jButtonNewKategory.setText("New Category");
         jButtonNewKategory.setMargin(new java.awt.Insets(2, 7, 2, 7));
@@ -166,25 +173,10 @@ public class SearchPanel extends javax.swing.JPanel {
             }
         });
 
-        jButtonSave.setText("Save");
-        jButtonSave.setMargin(new java.awt.Insets(2, 7, 2, 7));
-        jButtonSave.setMaximumSize(new java.awt.Dimension(89, 23));
-        jButtonSave.setMinimumSize(new java.awt.Dimension(89, 23));
-        jButtonSave.setPreferredSize(new java.awt.Dimension(89, 23));
-        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+        jAllCategoriesSearchCheckBox.setText("Search in all categories");
+        jAllCategoriesSearchCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSaveActionPerformed(evt);
-            }
-        });
-
-        jButtonDeleteItem.setText("Delete");
-        jButtonDeleteItem.setMargin(new java.awt.Insets(2, 7, 2, 7));
-        jButtonDeleteItem.setMaximumSize(new java.awt.Dimension(89, 23));
-        jButtonDeleteItem.setMinimumSize(new java.awt.Dimension(89, 23));
-        jButtonDeleteItem.setPreferredSize(new java.awt.Dimension(89, 23));
-        jButtonDeleteItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDeleteItemActionPerformed(evt);
+                jAllCategoriesSearchCheckBoxActionPerformed(evt);
             }
         });
 
@@ -197,14 +189,12 @@ public class SearchPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(bookmarkPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jButtonNewKategory)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                        .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jAllCategoriesSearchCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSearchField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -213,12 +203,14 @@ public class SearchPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButtonNewKategory, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonNewKategory, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jAllCategoriesSearchCheckBox))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
@@ -231,18 +223,6 @@ public class SearchPanel extends javax.swing.JPanel {
     private void jButtonNewKategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewKategoryActionPerformed
         newCategoryEvent();
     }//GEN-LAST:event_jButtonNewKategoryActionPerformed
-
-    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                GenericLogic.getInstance().saveTheCurrentCategory(Constants.DEFAULT_HISTORY_FILE);
-            }
-        });
-    }//GEN-LAST:event_jButtonSaveActionPerformed
-
-    private void jButtonDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteItemActionPerformed
-        deleteItem();
-    }//GEN-LAST:event_jButtonDeleteItemActionPerformed
 
     private void jCategoryDownLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCategoryDownLabelMouseClicked
         GenericModel.getInstance().setNextCategory();
@@ -287,12 +267,28 @@ public class SearchPanel extends javax.swing.JPanel {
 
     private void jSearchListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jSearchListValueChanged
 
+        setCategory();
         setCurrentBookmark();
     }//GEN-LAST:event_jSearchListValueChanged
 
     private void jBookmarkFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jBookmarkFieldFocusLost
         jBookmarkField.setEditable(false);
     }//GEN-LAST:event_jBookmarkFieldFocusLost
+
+    private void jAllCategoriesSearchCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAllCategoriesSearchCheckBoxActionPerformed
+        resetListSelection();
+        updateJSearchList();
+    }//GEN-LAST:event_jAllCategoriesSearchCheckBoxActionPerformed
+
+    private void jSearchListFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchListFocusGained
+        if(getSearchListItems().size() <= 0){
+            focusOnSearchTextField();
+        }
+    }//GEN-LAST:event_jSearchListFocusGained
+    
+    public boolean isAllCategoriesSearch(){
+        return jAllCategoriesSearchCheckBox.isSelected();
+    }
 
     public void setCurrentBookmark(){
 
@@ -313,29 +309,45 @@ public class SearchPanel extends javax.swing.JPanel {
             GenericMediator.getInstance().deleteItemEvent(item);
         }
 
-        int listSize = GenericModel.getInstance().getSearchListItemsOfCurrentCategory(jSearchField.getText()).size();
+        int listSize = getSearchListItems().size();
         if(listSize > 0){
             jSearchList.setSelectedIndex(selectedIndex);
         }        
     }
 
     public Item getSelectedItem(){
-
+        
         int selectedIndex = jSearchList.getSelectedIndex();
         Item item = null;
         if(selectedIndex >= 0){
-            item = GenericModel.getInstance().getSearchListItemsOfCurrentCategory(jSearchField.getText()).get(selectedIndex);
+            item = getSearchListItems().get(selectedIndex);
         }
 
         return item;
     }
 
+    public Item[] getSelectedItems(){
+        
+        int[] indices = jSearchList.getSelectedIndices();
+        Item[] items = new Item[indices.length];
+
+        for(int i = 0; i < indices.length; i++){
+            Item item = getSearchListItems().get(indices[i]);
+            items[i] = item;
+        }
+
+        return items;
+    }
+
+    public List<Item> getSearchListItems(){
+        return GenericMediator.getInstance().getSearchListItems(jSearchField.getText());
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bookmarkPanel;
+    private javax.swing.JCheckBox jAllCategoriesSearchCheckBox;
     private javax.swing.JTextField jBookmarkField;
-    private javax.swing.JButton jButtonDeleteItem;
     private javax.swing.JButton jButtonNewKategory;
-    private javax.swing.JButton jButtonSave;
     private javax.swing.JLabel jCategoryDownLabel;
     private javax.swing.JLabel jCategoryLabel;
     private javax.swing.JLabel jCategoryUpLabel;
@@ -356,7 +368,17 @@ public class SearchPanel extends javax.swing.JPanel {
     }
 
     public void updateJSearchList(String str){
-        jSearchList.setListData(GenericModel.getInstance().getSearchListItemsOfCurrentCategory(str).toArray());
+        jSearchList.setListData(GenericMediator.getInstance().getSearchListItems(str).toArray());
+    }
+
+    public void setCategory(){
+
+        ExtendedItem item = (ExtendedItem) getSelectedItem();
+        if(item == null){ return; }
+
+        Category category = item.getCategory();
+        GenericModel.getInstance().setCurrentCategory(category);
+        setCurrentCategoryLabel();
     }
 
     public void updateSearchPanelFields(){
@@ -377,8 +399,12 @@ public class SearchPanel extends javax.swing.JPanel {
         jSearchField.requestFocusInWindow();
     }
 
-    private void setListeners() {
+    public void resetListSelection(){        
+        jSearchList.clearSelection();
+    }
 
+    private void setListeners() {
+        
         registerKeyboardAction(new EscapeKeyActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), WHEN_IN_FOCUSED_WINDOW);
         registerKeyboardAction(new CategoryNavigateActionListener(KeyEvent.VK_UP), KeyStroke.getKeyStroke(KeyEvent.VK_UP, InputEvent.CTRL_MASK), WHEN_IN_FOCUSED_WINDOW);
         registerKeyboardAction(new CategoryNavigateActionListener(KeyEvent.VK_DOWN), KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, InputEvent.CTRL_MASK), WHEN_IN_FOCUSED_WINDOW);
@@ -392,9 +418,13 @@ public class SearchPanel extends javax.swing.JPanel {
 
                 private void updateTextField(){
                     try {
+
+                        resetListSelection();
+
                         javax.swing.text.Document doc = jSearchField.getDocument();
                         String text = doc.getText(0, doc.getLength());
                         updateJSearchList(text);
+
                     } catch (BadLocationException ex) {
                         ex.printStackTrace();
                     }
@@ -425,8 +455,14 @@ public class SearchPanel extends javax.swing.JPanel {
         public void keyPressed(KeyEvent e) {
             if(KeyEvent.VK_ENTER == e.getKeyCode()){
                 GenericMediator.getInstance().enterPressedOnSearchListEvent(jSearchField.getText());
+            } else if(KeyEvent.VK_F3 == e.getKeyCode()){
+                GenericMediator.getInstance().enterPressedOnSearchListEvent(jSearchField.getText(), true);
             } else if(KeyEvent.VK_DELETE == e.getKeyCode()){
                 deleteItem();
+            } else if(isKeyEventAlphaNumeric(e)){
+                resetListSelection();
+                jSearchField.requestFocusInWindow();
+                jSearchField.setText(Character.toString(e.getKeyChar()));
             }
         }
         
@@ -473,10 +509,35 @@ public class SearchPanel extends javax.swing.JPanel {
 
         public void actionPerformed(ActionEvent e) {
             
-            if(jSearchList.isFocusOwner() == false){
-                jSearchList.requestFocusInWindow();                
+            if(jSearchList.isFocusOwner() == false && getSearchListItems().size() > 0){
+                jSearchList.requestFocusInWindow();
+                jSearchList.setSelectedIndex(0);
             }
         }
     }
-    
+
+    public boolean isKeyEventAlphaNumeric(KeyEvent evt){
+
+        int keyCode = evt.getKeyCode();
+
+        return (keyCode >= KeyEvent.VK_A && keyCode <= KeyEvent.VK_Z) 
+                ||
+               (keyCode >= KeyEvent.VK_0 && keyCode <= KeyEvent.VK_9);
+    }
+
+    //--------------------------------------------------------------------
+
+    private void setDBPluginListeners() {
+
+        registerKeyboardAction(new DBActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0), WHEN_IN_FOCUSED_WINDOW);
+    }
+
+    class DBActionListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+
+            new QueryForm().runQueryAndDisplay(getSelectedItem().getItem());
+        }
+
+    }
 }

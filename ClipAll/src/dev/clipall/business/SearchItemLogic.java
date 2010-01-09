@@ -41,7 +41,11 @@ public class SearchItemLogic {
     public List<Item> queryTheCurrentCategory(String string){
 
         Category category = GenericModel.getInstance().getCurrentCategory();
-        
+
+        if(string.length() == 0){
+            return category.getItems();
+        }
+
         return filterList(category.getItems(), string);
     }
 
@@ -50,9 +54,15 @@ public class SearchItemLogic {
         List<Item> filteredItems = new ArrayList<Item>();
 
         List<Category> categories = GenericModel.getInstance().getCategories().getCategories();
-        
-        for(Category category : categories){
-            filteredItems.addAll(filterList(category.getItems(), string));
+
+        if(string.length() == 0){
+            for(Category category : categories){
+                filteredItems.addAll(category.getItems());
+            }
+        } else {
+            for(Category category : categories){
+                filteredItems.addAll(filterList(category.getItems(), string));
+            }
         }
 
         return filteredItems;

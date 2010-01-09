@@ -1,0 +1,1 @@
+schemagen -d tmp src/dev/clipall/model/dictionary/Dictionary.java src/dev/clipall/model/dictionary/Keyword.java src/dev/clipall/model/dictionary/KeywordList.java
