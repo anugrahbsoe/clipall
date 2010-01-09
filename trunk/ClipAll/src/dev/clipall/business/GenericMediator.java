@@ -18,13 +18,19 @@ package dev.clipall.business;
 import dev.clipall.Constants;
 import dev.clipall.business.platform.Platform;
 import dev.clipall.model.Category;
+import dev.clipall.model.ExtendedItem;
 import dev.clipall.model.GenericModel;
 import dev.clipall.model.Item;
 import dev.clipall.utils.Utils;
 import dev.clipall.view.SearchFrame;
 import dev.clipall.view.SearchPanel;
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
+import dev.utils.collections.Reversed;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -62,32 +68,82 @@ public class GenericMediator extends Constants {
         SearchPanel.getInstance().updateJSearchList();
     }
 
-    public void itemsToClipboardEvent(String item){
+    public Item itemsToClipboardEvent(String item){
         Item itemObj = new Item("", item, FlavorTypes.STRING);
-        itemsToClipboardEvent(itemObj);
+        return itemsToClipboardEvent(itemObj);
     }
 
-    public void itemsToClipboardEvent(Item item){
-        GenericModel.getInstance().getCurrentCategory().addItem(item);
+    public Item itemsToClipboardEvent(Item item){
+        ExtendedItem exItem = new ExtendedItem(item);
+        exItem.setCategory(GenericModel.getInstance().getCurrentCategory());
+        GenericModel.getInstance().getCurrentCategory().addItem(exItem);
         SearchPanel.getInstance().updateJSearchList();
+        return exItem;
     }
 
     public void deleteItemEvent(Item item){
-        GenericModel.getInstance().getCurrentCategory().removeItem(item);
+        //GenericModel.getInstance().getCurrentCategory().removeItem(item);
+        ExtendedItem exItem = (ExtendedItem) item;
+        exItem.getCategory().removeItem(exItem);
         SearchPanel.getInstance().updateJSearchList();
     }
 
-    public void enterPressedOnSearchListEvent(String searchedItem) {
+    
+    public void enterPressedForOneSelectedItem(String searchedItem) {
 
-        Item selectedItem = GenericModel.getInstance().
-                getSearchListItemsOfCurrentCategory(searchedItem).get(
-                            SearchPanel.getInstance().getSelectedItemIndex());
-                            
+        Item selectedItem = SearchPanel.getInstance().getSelectedItem();
+
+        if(selectedItem == null){ return; }
+
         itemsToClipboardEvent(selectedItem);
 
         ClipboardLogic.getInstance().setClipboard(selectedItem);
         
         Platform.getInstance().paste();
+    }
+
+    public void enterPressedOnSearchListEvent(String searchedItem){
+        enterPressedOnSearchListEvent(searchedItem, false);
+    }
+
+    public void enterPressedOnSearchListEvent(String searchedItem, boolean reverseOrder) {
+
+        Item[] items = SearchPanel.getInstance().getSelectedItems();
+
+        if(items.length == 0){ return; }
+
+        if(items.length == 1){
+            enterPressedForOneSelectedItem(searchedItem);
+            return;
+        }
+        
+        //Item item = itemsToClipboardEvent(itemsToString(items));
+        Item item = new Item("", itemsToString(items, reverseOrder), FlavorTypes.STRING);
+
+        ClipboardLogic.getInstance().setClipboard(item);
+
+        Platform.getInstance().paste();
+    }
+
+    public String itemsToString(Item[] items, boolean reverseOrder){
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+
+        if(reverseOrder){
+            for(Item item : Reversed.reversed(Arrays.asList(items))){
+                pw.println(item.getItem());
+            }
+        } else {
+            for(Item item : items){
+                pw.println(item.getItem());
+            }
+        }
+
+        pw.flush();
+        pw.close();
+
+        return sw.toString();
     }
 
     public void createNewCategory(String categoryName) {
@@ -114,5 +170,13 @@ public class GenericMediator extends Constants {
         //SearchPanel.getInstance().focusOnSearchTextField();
         SearchFrame.getInstance().displaySearchFrame();
     }
-    
+
+    public List<Item> getSearchListItems(String string) {
+        
+        if(SearchPanel.getInstance().isAllCategoriesSearch()){
+            return SearchItemLogic.getInstance().queryAllCategories(string);
+        } else {
+            return SearchItemLogic.getInstance().queryTheCurrentCategory(string);
+        }        
+    }
 }

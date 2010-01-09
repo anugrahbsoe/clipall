@@ -10,4 +10,14 @@
 		</bindings>
 		<catalog/>
 	</schema>
+	<schema type='-xmlschema' package='dev.clipall.model.jaxb.dictionary' name='jaxb_dictionary'>
+		<xjc-options>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='xml-resources/jaxb/jaxb_dictionary/dictionary.xsd' origLocation='tmp/dictionary.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
 </schemas>

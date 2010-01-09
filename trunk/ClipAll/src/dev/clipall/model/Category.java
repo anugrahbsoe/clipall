@@ -56,12 +56,13 @@ public class Category {
     }
 
     /**
-     *  adds new item or resorts the contained item.
+    * adds new item or resorts the contained item.
     */
     public void addItem(String bookmark, String itemString, int type){
         Item item = new Item(bookmark, itemString, type);
-        items.remove(item);
-        items.addFirst(item);
+        ExtendedItem extendedItem = new ExtendedItem(item, this);
+        items.remove(extendedItem);
+        items.addFirst(extendedItem);
     }
 
     public void addItem(Item item){
@@ -141,7 +142,8 @@ public class Category {
         List<dev.clipall.model.jaxb.Item> jaxbItemList = category.getItems();
 
         for(dev.clipall.model.jaxb.Item jaxbItem : jaxbItemList){
-            Item item = new Item(jaxbItem);
+            ExtendedItem item = new ExtendedItem(jaxbItem);
+            item.setCategory(this);
             items.add(item);
         }
     }

@@ -25,15 +25,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class Item {
 
-    private int type;
+    protected int type;
 
     /**
      *  if file list : 
      *  item = "C:\tmp\file1;D:\music\mozart.mp3";
      */
-    private String item;
+    protected String item;
 
-    private String bookmark;
+    protected String bookmark;
     
 
     public Item(){}

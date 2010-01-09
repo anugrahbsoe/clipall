@@ -37,6 +37,9 @@ public class Constants {
     public static final String  UPDATE_PAGE = "http://code.google.com/p/clipall/downloads/list";
     public static final String  HOME_PAGE   = "http://code.google.com/p/clipall";
 
+    public static final String DICTIONARY_DIR = "resources/dicts";
+    public static final String DICTIONARY_FILE_EXT = "xml";
+
     public class Resources {
 
         public static final String SYSTEM_TRAY_ICON = "/resources/images/console.png";

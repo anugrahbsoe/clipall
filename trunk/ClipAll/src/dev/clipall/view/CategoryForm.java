@@ -126,7 +126,8 @@ public class CategoryForm extends javax.swing.JFrame {
             public void run() {
 
                 CategoryForm categoryForm = new CategoryForm();
-                categoryForm.setVisible(true);                
+                categoryForm.setVisible(true);
+                categoryForm.setFocusToTextField();
             }
         });
     }
@@ -138,6 +139,10 @@ public class CategoryForm extends javax.swing.JFrame {
                 setVisible(false);
             }
         });
+    }
+
+    public void setFocusToTextField(){
+        jTextCategoryName.requestFocusInWindow();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
