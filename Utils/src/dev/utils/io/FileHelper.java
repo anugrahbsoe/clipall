@@ -87,10 +87,13 @@ public class FileHelper {
         }
     }
 
+    /**
+     *  returns null if dir is not exist,
+     *  returns empty if no suitable file exists in the dir.
+     */
     public static File[] getFilesInDir(String dir, FileFilter fileFilter) {
         File root = new File(dir);
-        File[] files = root.listFiles(fileFilter);
-
+        File[] files = root.listFiles(fileFilter);        
         return files;
     }
 
