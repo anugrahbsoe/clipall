@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +85,18 @@ public class FileHelper {
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
+        }
+    }
+
+    public static void createFile(String file, String content){
+        try {
+
+            PrintWriter pw = new PrintWriter(file);
+            pw.print(content);
+            pw.flush();
+            pw.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -175,5 +188,9 @@ public class FileHelper {
         }
 
         return fileList;
+    }
+
+    public static String getRuntimeDirectory(){
+        return new File("").getAbsolutePath();
     }
 }
