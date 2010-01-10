@@ -64,7 +64,7 @@ public class GenericLogic {
 
         loadFromXML(Constants.DEFAULT_HISTORY_FILE);
 
-        loadDictionaries();
+        loadDictionaries();       
     }
 
     public void loadFromXML(String historyFile) {
@@ -163,15 +163,46 @@ public class GenericLogic {
         categories.addNewCategory(currentCategory, true);
         
         save(categories, historyFile);
+    }    
+
+    private void setDefaultCategories() {
+
+        Categories categories = Categories.createDefaultInstance();
+        GenericModel.getInstance().setCategories(categories);
     }
 
+    public void exitApplication(){
+
+        HotKeyLogic.getInstance().cleanup();
+        System.exit(0);
+    }
+
+    public String getTmpFile(String filename){
+        return Constants.TEMP_DIR + File.separator + filename;
+    }
+
+    //-----------------------------------------------------------------
+
+    /**
+     *  Donot use; used in Constants.java
+     *  get tmp dir as: Constants.TEMP_DIR
+     */
+    public String tmpDir(){
+        // create temp directory
+        String tmpDir = FileHelper.getRuntimeDirectory() + File.separator + Constants.TEMP_DIR_NAME;
+        new File(tmpDir).mkdirs();
+        return tmpDir;
+    }
+
+    /**
+     *  Donot use; used in Constants.java
+     *  get launcher file as: Constants.APP_LAUNCHER_FILE
+     */
     public String launcherFile() {
 
         try {
 
-            String base = new File("").getAbsolutePath();
-
-            String appFile = base + File.separator + Constants.DEFAULT_APP_FILE_NAME;
+            String appFile = FileHelper.getRuntimeDirectory() + File.separator + Constants.DEFAULT_APP_FILE_NAME;
 
             if (new File(appFile).exists()) {
                 return appFile;
@@ -188,18 +219,6 @@ public class GenericLogic {
             Logger.getLogger().error("", ex, getClass());
             return "";
         }
-    }
-
-    private void setDefaultCategories() {
-
-        Categories categories = Categories.createDefaultInstance();
-        GenericModel.getInstance().setCategories(categories);
-    }
-
-    public void exitApplication(){
-
-        HotKeyLogic.getInstance().cleanup();
-        System.exit(0);
     }
     
 }

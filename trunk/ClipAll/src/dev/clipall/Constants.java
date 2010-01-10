@@ -40,6 +40,9 @@ public class Constants {
     public static final String DICTIONARY_DIR = "resources/dicts";
     public static final String DICTIONARY_FILE_EXT = "xml";
 
+    public static final String TEMP_DIR_NAME = "tmp";
+    public static final String TEMP_DIR = GenericLogic.getInstance().tmpDir();
+
     public class Resources {
 
         public static final String SYSTEM_TRAY_ICON = "/resources/images/console.png";

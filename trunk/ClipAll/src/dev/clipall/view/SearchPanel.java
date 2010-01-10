@@ -455,8 +455,12 @@ public class SearchPanel extends javax.swing.JPanel {
         public void keyPressed(KeyEvent e) {
             if(KeyEvent.VK_ENTER == e.getKeyCode()){
                 GenericMediator.getInstance().enterPressedOnSearchListEvent(jSearchField.getText());
-            } else if(KeyEvent.VK_F3 == e.getKeyCode()){
+            } else if(KeyEvent.VK_F2 == e.getKeyCode()){
                 GenericMediator.getInstance().enterPressedOnSearchListEvent(jSearchField.getText(), true);
+            } else if(KeyEvent.VK_F3 == e.getKeyCode()){
+                GenericMediator.getInstance().compareItems();
+            } else if(KeyEvent.VK_F4 == e.getKeyCode()){
+                GenericMediator.getInstance().compareItemsWithDiffMerge();
             } else if(KeyEvent.VK_DELETE == e.getKeyCode()){
                 deleteItem();
             } else if(isKeyEventAlphaNumeric(e)){

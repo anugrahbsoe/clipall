@@ -78,7 +78,8 @@ public class SearchItemLogic {
         List<Item> filteredItems = new ArrayList<Item>();
 
         for(Item item : items){
-            if(item.getItem().toUpperCase().contains(string.toUpperCase())){
+            if(item.getItem().toUpperCase().contains(string.toUpperCase()) ||
+                    item.getBookmark().toUpperCase().contains(string.toUpperCase())){
                 filteredItems.add(item);
             }
         }
