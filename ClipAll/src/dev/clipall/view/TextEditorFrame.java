@@ -7,15 +7,38 @@
 
 package dev.clipall.view;
 
+import dev.clipall.Constants;
+import dev.clipall.business.GenericMediator;
+import dev.clipall.model.ExtendedItem;
+import dev.clipall.model.Item;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
 /**
  *
  * @author dev
  */
 public class TextEditorFrame extends javax.swing.JFrame {
 
+    private JPanel panel;
+    private Item item;
+
     /** Creates new form TextEditorFrame */
     public TextEditorFrame() {
+        panel = new JPanel();
+        setContentPane(panel);
         initComponents();
+        setListeners();
+
+        //setLocationRelativeTo(SearchFrame.getInstance());
+        try {
+            setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Constants.Resources.SYSTEM_TRAY_ICON)));
+        } catch (Exception ex) {
+        }        
     }
 
     /** This method is called from within the constructor to
@@ -27,17 +50,25 @@ public class TextEditorFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jItemField = new javax.swing.JTextArea();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Item Text");
+
+        jItemField.setColumns(20);
+        jItemField.setRows(5);
+        jScrollPane1.setViewportView(jItemField);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
         );
 
         pack();
@@ -45,6 +76,57 @@ public class TextEditorFrame extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea jItemField;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
+    public void setListeners() {
+
+        panel.registerKeyboardAction(new EscapeKeyActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JPanel.WHEN_IN_FOCUSED_WINDOW);
+        panel.registerKeyboardAction(new EnterActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), JPanel.WHEN_IN_FOCUSED_WINDOW);
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    class EnterActionListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+
+            hide();
+            item.setItem(jItemField.getText());
+            GenericMediator.getInstance().pasteItemWithoutOrder(item);
+        }
+    }    
+    
+
+    public void display(Item item) {
+
+        if(item == null){
+            return;
+        }
+
+        this.item = new ExtendedItem(item);
+
+        jItemField.setText(item.getItem());
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+                setVisible(true);
+            }
+        });
+    }
+
+    class EscapeKeyActionListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            hide();
+        }
+    }
 }

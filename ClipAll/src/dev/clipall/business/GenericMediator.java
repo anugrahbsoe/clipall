@@ -88,7 +88,12 @@ public class GenericMediator extends Constants {
         SearchPanel.getInstance().updateJSearchList();
     }
 
-    public void enterPressedForOneSelectedItem(String searchedItem) {
+    public void pasteItemWithoutOrder(Item item){
+        ClipboardLogic.getInstance().setClipboard(item);
+        Platform.getInstance().paste();
+    }
+
+    public void enterPressedForOneSelectedItem() {
 
         Item selectedItem = SearchPanel.getInstance().getSelectedItem();
 
@@ -103,11 +108,11 @@ public class GenericMediator extends Constants {
         Platform.getInstance().paste();
     }
 
-    public void enterPressedOnSearchListEvent(String searchedItem) {
-        enterPressedOnSearchListEvent(searchedItem, false);
+    public void enterPressedOnSearchListEvent() {
+        enterPressedOnSearchListEvent(false);
     }
 
-    public void enterPressedOnSearchListEvent(String searchedItem, boolean reverseOrder) {
+    public void enterPressedOnSearchListEvent(boolean reverseOrder) {
 
         Item[] items = SearchPanel.getInstance().getSelectedItems();
 
@@ -116,7 +121,7 @@ public class GenericMediator extends Constants {
         }
 
         if (items.length == 1) {
-            enterPressedForOneSelectedItem(searchedItem);
+            enterPressedForOneSelectedItem();
             return;
         }
 
@@ -225,6 +230,38 @@ public class GenericMediator extends Constants {
         String command = "cmd /c diffmerge.exe" +
                 " \"" + file1 + "\"" +
                 " \"" + file2 + "\"";
+        try {
+            Runtime.getRuntime().exec(command);
+        } catch (IOException ex) {
+            Logger.getLogger().error("", ex, getClass());
+        }
+    }
+
+    public void runInConsole() {
+
+        Item selectedItem = SearchPanel.getInstance().getSelectedItem();
+
+        if (selectedItem == null) {
+            return;
+        }
+
+        String command = "cmd /c" + selectedItem.getItem();
+        try {
+            Runtime.getRuntime().exec(command);
+        } catch (IOException ex) {
+            Logger.getLogger().error("", ex, getClass());
+        }
+    }
+
+    public void openDirectory() {
+
+        Item selectedItem = SearchPanel.getInstance().getSelectedItem();
+
+        if (selectedItem == null) {
+            return;
+        }
+
+        String command = "explorer /root, " + selectedItem.getItem();
         try {
             Runtime.getRuntime().exec(command);
         } catch (IOException ex) {

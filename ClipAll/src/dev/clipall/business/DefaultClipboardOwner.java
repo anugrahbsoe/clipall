@@ -65,12 +65,12 @@ public class DefaultClipboardOwner implements ClipboardOwner {
                 List<File> list = (List<File>) tr.getTransferData(DataFlavor.javaFileListFlavor);
 
                 GenericMediator.getInstance().itemsToClipboardEvent(list);
-                System.out.println("files -->  " + Utils.filesToString(list));
+                //System.out.println("files -->  " + Utils.filesToString(list));
 
             } else {
 
                 GenericMediator.getInstance().itemsToClipboardEvent((String)tr.getTransferData(DataFlavor.stringFlavor));
-                System.out.println("Processing: " + tr.getTransferData(DataFlavor.stringFlavor));
+                //System.out.println("Processing: " + tr.getTransferData(DataFlavor.stringFlavor));
             }
 
         } catch (UnsupportedFlavorException ex) {

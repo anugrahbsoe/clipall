@@ -39,8 +39,7 @@ public class QueryForm extends javax.swing.JFrame {
         try {
             setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Constants.Resources.SYSTEM_TRAY_ICON)));
         } catch (Exception ex) {
-        }
-        panel.registerKeyboardAction(new EscapeKeyActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JPanel.WHEN_IN_FOCUSED_WINDOW);
+        }        
     }
 
     /** This method is called from within the constructor to
@@ -122,6 +121,7 @@ public class QueryForm extends javax.swing.JFrame {
 
     public void setListeners() {
 
+        panel.registerKeyboardAction(new EscapeKeyActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JPanel.WHEN_IN_FOCUSED_WINDOW);
         panel.registerKeyboardAction(new QueryActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0), JPanel.WHEN_IN_FOCUSED_WINDOW);
     }
 
