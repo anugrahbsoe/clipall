@@ -20,6 +20,7 @@ import dev.clipall.model.GenericModel;
 import dev.clipall.model.Item;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  *  This is for search items by filtering.
@@ -75,11 +76,23 @@ public class SearchItemLogic {
      */
     public List<Item> filterList(List<Item> items, String string){
 
+        StringTokenizer tk = new StringTokenizer(string, " ");
+        
         List<Item> filteredItems = new ArrayList<Item>();
 
         for(Item item : items){
-            if(item.getItem().toUpperCase().contains(string.toUpperCase()) ||
-                    item.getBookmark().toUpperCase().contains(string.toUpperCase())){
+
+            boolean containsAll = true;
+            while(tk.hasMoreTokens()){
+                String token = tk.nextToken();
+                if(false == (item.getItem().toUpperCase().contains(token.toUpperCase()) ||
+                        item.getBookmark().toUpperCase().contains(token.toUpperCase()))){
+                    containsAll = false;
+                    break;
+                }
+            }
+
+            if(containsAll){
                 filteredItems.add(item);
             }
         }

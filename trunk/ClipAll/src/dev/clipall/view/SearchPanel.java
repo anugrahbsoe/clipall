@@ -43,7 +43,7 @@ public class SearchPanel extends javax.swing.JPanel {
     private SearchPanel(){
         initComponents();        
         setListeners();
-        setDBPluginListeners();
+        //setDBPluginListeners();
     }
 
     public static SearchPanel getInstance(){
@@ -59,6 +59,13 @@ public class SearchPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenu = new javax.swing.JPopupMenu();
+        itemDir = new javax.swing.JMenuItem();
+        itemDiffMerge = new javax.swing.JMenuItem();
+        itemSvnDiff = new javax.swing.JMenuItem();
+        itemPaste = new javax.swing.JMenuItem();
+        itemReversePaste = new javax.swing.JMenuItem();
+        itemCmd = new javax.swing.JMenuItem();
         bookmarkPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jBookmarkField = new javax.swing.JTextField();
@@ -71,6 +78,54 @@ public class SearchPanel extends javax.swing.JPanel {
         jCategoryDownLabel = new javax.swing.JLabel();
         jButtonNewKategory = new javax.swing.JButton();
         jAllCategoriesSearchCheckBox = new javax.swing.JCheckBox();
+
+        itemDir.setText("Open Directory");
+        itemDir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemDirActionPerformed(evt);
+            }
+        });
+        popupMenu.add(itemDir);
+
+        itemDiffMerge.setText("Diff");
+        itemDiffMerge.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemDiffMergeActionPerformed(evt);
+            }
+        });
+        popupMenu.add(itemDiffMerge);
+
+        itemSvnDiff.setText("SvnDiff");
+        itemSvnDiff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemSvnDiffActionPerformed(evt);
+            }
+        });
+        popupMenu.add(itemSvnDiff);
+
+        itemPaste.setText("Paste");
+        itemPaste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPasteActionPerformed(evt);
+            }
+        });
+        popupMenu.add(itemPaste);
+
+        itemReversePaste.setText("Reverse Paste");
+        itemReversePaste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemReversePasteActionPerformed(evt);
+            }
+        });
+        popupMenu.add(itemReversePaste);
+
+        itemCmd.setText("Run As Command");
+        itemCmd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCmdActionPerformed(evt);
+            }
+        });
+        popupMenu.add(itemCmd);
 
         setMinimumSize(new java.awt.Dimension(300, 180));
 
@@ -117,6 +172,9 @@ public class SearchPanel extends javax.swing.JPanel {
         jSearchList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jSearchListMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jSearchListMouseReleased(evt);
             }
         });
         jSearchList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -235,7 +293,7 @@ public class SearchPanel extends javax.swing.JPanel {
     private void jSearchListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchListMouseClicked
         if(evt.getClickCount() == 2 && evt.isConsumed() == false){
             evt.consume();
-            GenericMediator.getInstance().enterPressedOnSearchListEvent(jSearchField.getText());
+            GenericMediator.getInstance().enterPressedOnSearchListEvent();
         }
     }//GEN-LAST:event_jSearchListMouseClicked
 
@@ -285,6 +343,36 @@ public class SearchPanel extends javax.swing.JPanel {
             focusOnSearchTextField();
         }
     }//GEN-LAST:event_jSearchListFocusGained
+
+    private void itemCmdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCmdActionPerformed
+        GenericMediator.getInstance().runInConsole();
+    }//GEN-LAST:event_itemCmdActionPerformed
+
+    private void itemDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDirActionPerformed
+        GenericMediator.getInstance().openDirectory();
+    }//GEN-LAST:event_itemDirActionPerformed
+
+    private void jSearchListMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchListMouseReleased
+        if(evt.isPopupTrigger()){
+            popupMenu.show(SearchPanel.this, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jSearchListMouseReleased
+
+    private void itemDiffMergeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDiffMergeActionPerformed
+        GenericMediator.getInstance().compareItemsWithDiffMerge();
+    }//GEN-LAST:event_itemDiffMergeActionPerformed
+
+    private void itemSvnDiffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSvnDiffActionPerformed
+        GenericMediator.getInstance().compareItems();
+    }//GEN-LAST:event_itemSvnDiffActionPerformed
+
+    private void itemPasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPasteActionPerformed
+        GenericMediator.getInstance().enterPressedOnSearchListEvent();
+    }//GEN-LAST:event_itemPasteActionPerformed
+
+    private void itemReversePasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReversePasteActionPerformed
+        GenericMediator.getInstance().enterPressedOnSearchListEvent(true);
+    }//GEN-LAST:event_itemReversePasteActionPerformed
     
     public boolean isAllCategoriesSearch(){
         return jAllCategoriesSearchCheckBox.isSelected();
@@ -345,6 +433,12 @@ public class SearchPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bookmarkPanel;
+    private javax.swing.JMenuItem itemCmd;
+    private javax.swing.JMenuItem itemDiffMerge;
+    private javax.swing.JMenuItem itemDir;
+    private javax.swing.JMenuItem itemPaste;
+    private javax.swing.JMenuItem itemReversePaste;
+    private javax.swing.JMenuItem itemSvnDiff;
     private javax.swing.JCheckBox jAllCategoriesSearchCheckBox;
     private javax.swing.JTextField jBookmarkField;
     private javax.swing.JButton jButtonNewKategory;
@@ -356,6 +450,7 @@ public class SearchPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jSearchField;
     private javax.swing.JList jSearchList;
+    private javax.swing.JPopupMenu popupMenu;
     // End of variables declaration//GEN-END:variables
 
     public void setCurrentCategoryLabel(){
@@ -454,15 +549,17 @@ public class SearchPanel extends javax.swing.JPanel {
 
         public void keyPressed(KeyEvent e) {
             if(KeyEvent.VK_ENTER == e.getKeyCode()){
-                GenericMediator.getInstance().enterPressedOnSearchListEvent(jSearchField.getText());
+                GenericMediator.getInstance().enterPressedOnSearchListEvent();
             } else if(KeyEvent.VK_F2 == e.getKeyCode()){
-                GenericMediator.getInstance().enterPressedOnSearchListEvent(jSearchField.getText(), true);
+                GenericMediator.getInstance().enterPressedOnSearchListEvent(true);
             } else if(KeyEvent.VK_F3 == e.getKeyCode()){
                 GenericMediator.getInstance().compareItems();
             } else if(KeyEvent.VK_F4 == e.getKeyCode()){
                 GenericMediator.getInstance().compareItemsWithDiffMerge();
             } else if(KeyEvent.VK_DELETE == e.getKeyCode()){
                 deleteItem();
+            } else if(KeyEvent.VK_RIGHT == e.getKeyCode()){
+                new TextEditorFrame().display(SearchPanel.getInstance().getSelectedItem());
             } else if(isKeyEventAlphaNumeric(e)){
                 resetListSelection();
                 jSearchField.requestFocusInWindow();
