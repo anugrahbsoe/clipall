@@ -19,6 +19,7 @@ import dev.clipall.model.Category;
 import dev.clipall.model.GenericModel;
 import dev.clipall.model.Item;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -76,15 +77,21 @@ public class SearchItemLogic {
      */
     public List<Item> filterList(List<Item> items, String string){
 
-        StringTokenizer tk = new StringTokenizer(string, " ");
+        String[] tokens = string.split(" ");
+        LinkedList<String> tokenList = new LinkedList<String>();
+        for(String token : tokens){
+            token = token.trim();
+            if(token.length() > 0){
+                tokenList.add(token);
+            }
+        }
         
         List<Item> filteredItems = new ArrayList<Item>();
 
         for(Item item : items){
 
             boolean containsAll = true;
-            while(tk.hasMoreTokens()){
-                String token = tk.nextToken();
+            for(String token : tokenList){
                 if(false == (item.getItem().toUpperCase().contains(token.toUpperCase()) ||
                         item.getBookmark().toUpperCase().contains(token.toUpperCase()))){
                     containsAll = false;
