@@ -15,7 +15,6 @@
 
 package dev.clipall.business;
 
-import dev.clipall.utils.Utils;
 import dev.utils.log.Logger;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -29,7 +28,7 @@ import java.util.List;
 
 /**
  *
- * @author erol
+ * @author Erol Hira
  */
 public class DefaultClipboardOwner implements ClipboardOwner {
 
@@ -66,14 +65,25 @@ public class DefaultClipboardOwner implements ClipboardOwner {
 
                 GenericMediator.getInstance().itemsToClipboardEvent(list);
                 //System.out.println("files -->  " + Utils.filesToString(list));
-
-            } else {
+                
+            } else if(tr.isDataFlavorSupported(DataFlavor.stringFlavor)){
 
                 GenericMediator.getInstance().itemsToClipboardEvent((String)tr.getTransferData(DataFlavor.stringFlavor));
                 //System.out.println("Processing: " + tr.getTransferData(DataFlavor.stringFlavor));
-            }
+                
+            } else {
 
+                DataFlavor[] flavors = tr.getTransferDataFlavors();
+                if(flavors != null && flavors.length > 0){
+                    GenericMediator.getInstance().itemsToClipboardEvent((String)tr.getTransferData(flavors[0]));
+                }
+            }
+            
         } catch (UnsupportedFlavorException ex) {
+            DataFlavor[] flavors = tr.getTransferDataFlavors();
+            if(flavors != null && flavors.length > 0){
+                Logger.getLogger().debug("mime: " + flavors[0].getMimeType() + " is not supported..", getClass());
+            }
             Logger.getLogger().error("", ex, getClass());
         } catch (IOException ex) {
             Logger.getLogger().error("", ex, getClass());

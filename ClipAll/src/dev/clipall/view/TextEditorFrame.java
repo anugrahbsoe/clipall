@@ -83,7 +83,7 @@ public class TextEditorFrame extends javax.swing.JFrame {
     public void setListeners() {
 
         panel.registerKeyboardAction(new EscapeKeyActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JPanel.WHEN_IN_FOCUSED_WINDOW);
-        panel.registerKeyboardAction(new EnterActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), JPanel.WHEN_IN_FOCUSED_WINDOW);
+        panel.registerKeyboardAction(new PasteActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), JPanel.WHEN_IN_FOCUSED_WINDOW);
     }
 
     public Item getItem() {
@@ -94,7 +94,7 @@ public class TextEditorFrame extends javax.swing.JFrame {
         this.item = item;
     }
 
-    class EnterActionListener implements ActionListener {
+    class PasteActionListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
 

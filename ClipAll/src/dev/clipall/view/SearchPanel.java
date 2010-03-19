@@ -405,13 +405,17 @@ public class SearchPanel extends javax.swing.JPanel {
 
     public Item getSelectedItem(){
         
-        int selectedIndex = jSearchList.getSelectedIndex();
+        int selectedIndex = getSelectedItemIndex();
         Item item = null;
         if(selectedIndex >= 0){
             item = getSearchListItems().get(selectedIndex);
         }
 
         return item;
+    }
+
+    public Item getItem(int itemIndex){
+        return getSearchListItems().get(itemIndex);
     }
 
     public Item[] getSelectedItems(){
@@ -429,6 +433,10 @@ public class SearchPanel extends javax.swing.JPanel {
 
     public List<Item> getSearchListItems(){
         return GenericMediator.getInstance().getSearchListItems(jSearchField.getText());
+    }
+
+    public int itemCount(){
+        return getSearchListItems().size();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

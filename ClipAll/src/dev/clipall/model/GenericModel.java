@@ -24,9 +24,8 @@ import java.util.List;
  *
  * @author erol
  */
-public class GenericModel {
+public class GenericModel {    
 
-    
     private Categories  categories;
     private Category    currentCategory;
     private List<Item>  searchListItems; // items that will be displayed in SearchPanel
