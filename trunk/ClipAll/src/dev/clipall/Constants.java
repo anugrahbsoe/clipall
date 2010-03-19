@@ -67,5 +67,6 @@ public class Constants {
     public class Hotkeys {
 
         public static final int WIN_A = 1;
+        public static final int WIN_V = 2;
     }
 }

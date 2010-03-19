@@ -96,14 +96,16 @@ public class GenericMediator extends Constants {
     public void enterPressedForOneSelectedItem() {
 
         Item selectedItem = SearchPanel.getInstance().getSelectedItem();
-
+        
         if (selectedItem == null) {
             return;
         }
+        
+        SerialPastingLogic.getInstance().setIndex(SearchPanel.getInstance().getSelectedItemIndex());
+        SerialPastingLogic.getInstance().incrementIndex();
 
         itemsToClipboardEvent(selectedItem);
-
-        ClipboardLogic.getInstance().setClipboard(selectedItem);
+        ClipboardLogic.getInstance().setClipboard(selectedItem);        
 
         Platform.getInstance().paste();
     }

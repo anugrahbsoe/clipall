@@ -18,7 +18,6 @@ package dev.clipall.business;
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.JIntellitype;
 import dev.clipall.Constants;
-import dev.clipall.view.SearchFrame;
 
 /**
  *
@@ -38,10 +37,13 @@ public class HotKeyLogic implements HotkeyListener {
     
     public void onHotKey(int keyIdentifier) {
 
-        System.out.println("key pressed");
+        //System.out.println("key pressed");
         if(Constants.Hotkeys.WIN_A == keyIdentifier) {
-            System.out.println("ctrl + i  : is pressed");
+            //System.out.println("win+A  : is pressed");
             GenericMediator.getInstance().displaySearchPanel();
+        } else if(Constants.Hotkeys.WIN_V == keyIdentifier){
+            //System.out.println("win+V  : is pressed");
+            SerialPastingLogic.getInstance().pasteNext();
         }
     }
 
@@ -59,10 +61,12 @@ public class HotKeyLogic implements HotkeyListener {
         // assign global hotkeys
         //JIntellitype.getInstance().registerSwingHotKey(Constants.Hotkeys.CTRL_i, Event.CTRL_MASK + Event.SHIFT_MASK, (int)'k');
         JIntellitype.getInstance().registerHotKey(Constants.Hotkeys.WIN_A, JIntellitype.MOD_WIN, (int)'A');
+        JIntellitype.getInstance().registerHotKey(Constants.Hotkeys.WIN_V, JIntellitype.MOD_WIN, (int)'V');
     }
 
     public void cleanup(){
         JIntellitype.getInstance().unregisterHotKey(Constants.Hotkeys.WIN_A);
+        JIntellitype.getInstance().unregisterHotKey(Constants.Hotkeys.WIN_V);
         JIntellitype.getInstance().cleanUp();
     }
 }
