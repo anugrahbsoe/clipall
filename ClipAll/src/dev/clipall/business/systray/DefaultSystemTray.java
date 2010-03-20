@@ -94,14 +94,15 @@ public class DefaultSystemTray {
         };
 
         addSearchPanelDisplayerItem();
+        addUpdaterItem();
         addStartupSwitcherItem();
         addExitItem();
 
-        trayIcon = new TrayIcon(image, "ClipAll", popupMenu);
+        trayIcon = new TrayIcon(image, "ClipAll - Clipboard History", popupMenu);
 
         ActionListener actionListener = new ActionListener() {
 
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {                
                 trayIcon.displayMessage("Check For New Version..",
                         Constants.UPDATE_PAGE,
                         TrayIcon.MessageType.INFO);
@@ -110,7 +111,7 @@ public class DefaultSystemTray {
 
         trayIcon.setImageAutoSize(true);
         trayIcon.addActionListener(actionListener);
-        trayIcon.addMouseListener(mouseListener);
+        trayIcon.addMouseListener(mouseListener);        
     }
 
     private void addStartupSwitcherItem(){
@@ -145,6 +146,20 @@ public class DefaultSystemTray {
 
         defaultItem.addActionListener(startupSwitcher);
         popupMenu.add(defaultItem);        
+    }
+
+    private void addUpdaterItem(){
+
+        ActionListener updaterListener = new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                GenericMediator.getInstance().runBrowser(Constants.HOME_PAGE);
+            }
+        };
+
+        MenuItem defaultItem = new MenuItem("Check For Updates");
+        defaultItem.addActionListener(updaterListener);        
+        popupMenu.add(defaultItem);
     }
 
     private void addExitItem(){
