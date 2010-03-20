@@ -77,7 +77,13 @@ public class DefaultSystemTray {
 
         MouseListener mouseListener = new MouseListener() {
 
-            public void mouseClicked(MouseEvent e) {                
+            public void mouseClicked(MouseEvent e) {
+
+                if(MouseEvent.BUTTON1 == e.getButton()){
+                    trayIcon.displayMessage("Check For New Version..",
+                                            Constants.HOME_PAGE,
+                                            TrayIcon.MessageType.INFO);
+                }
             }
 
             public void mouseEntered(MouseEvent e) {                
@@ -103,9 +109,7 @@ public class DefaultSystemTray {
         ActionListener actionListener = new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {                
-                trayIcon.displayMessage("Check For New Version..",
-                        Constants.UPDATE_PAGE,
-                        TrayIcon.MessageType.INFO);
+                GenericMediator.getInstance().runBrowser(Constants.HOME_PAGE);
             }
         };
 
@@ -185,7 +189,7 @@ public class DefaultSystemTray {
             }
         };
 
-        MenuItem defaultItem = new MenuItem("Search History");
+        MenuItem defaultItem = new MenuItem("Search History -- Win + A");
         defaultItem.addActionListener(displayerListener);
         popupMenu.add(defaultItem);
     }

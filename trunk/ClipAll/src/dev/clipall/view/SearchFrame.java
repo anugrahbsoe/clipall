@@ -68,12 +68,14 @@ public class SearchFrame extends javax.swing.JFrame {
         menuItem_Delete = new javax.swing.JMenuItem();
         menuItem_DeleteCategory = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        menuItem_ShortcutFrame = new javax.swing.JMenuItem();
         menuItem_CheckForUpdates = new javax.swing.JMenuItem();
         menuItem_About = new javax.swing.JMenuItem();
 
         fileChooser.setDialogTitle("History File Chooser");
 
         setTitle("ClipAll");
+        setMinimumSize(new java.awt.Dimension(585, 460));
 
         jMenu1.setText("File");
 
@@ -151,6 +153,14 @@ public class SearchFrame extends javax.swing.JFrame {
 
         jMenu3.setText("Help");
 
+        menuItem_ShortcutFrame.setText("Shortcut Descriptions");
+        menuItem_ShortcutFrame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_ShortcutFrameActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuItem_ShortcutFrame);
+
         menuItem_CheckForUpdates.setText("Check for Updates");
         menuItem_CheckForUpdates.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,6 +235,10 @@ public class SearchFrame extends javax.swing.JFrame {
         GenericMediator.getInstance().runBrowser(Constants.HOME_PAGE);
     }//GEN-LAST:event_menuItem_CheckForUpdatesActionPerformed
 
+    private void menuItem_ShortcutFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_ShortcutFrameActionPerformed
+        ShortcutFrame.displayNewInstance();
+    }//GEN-LAST:event_menuItem_ShortcutFrameActionPerformed
+
     /**
     * @param args the command line arguments
     */    
@@ -245,6 +259,7 @@ public class SearchFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItem_Save;
     private javax.swing.JMenuItem menuItem_SaveAll;
     private javax.swing.JMenuItem menuItem_SaveAllAs;
+    private javax.swing.JMenuItem menuItem_ShortcutFrame;
     // End of variables declaration//GEN-END:variables
 
     

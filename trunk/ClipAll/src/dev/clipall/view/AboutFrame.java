@@ -56,6 +56,7 @@ public class AboutFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("About");
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -65,7 +66,7 @@ public class AboutFrame extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Product Version : ClipAll 1.4 RC2\n\nhttp://code.google.com/p/clipall\n");
+        jTextArea1.setText("Product Version : ClipAll 1.4 RC3\n\nhttp://code.google.com/p/clipall\n");
         jTextArea1.setFocusable(false);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -129,7 +130,7 @@ public class AboutFrame extends javax.swing.JFrame {
             java.awt.EventQueue.invokeLater(new Runnable() {
 
                 public void run() {
-                    setVisible(false);
+                    dispose();
                 }
             });
         }

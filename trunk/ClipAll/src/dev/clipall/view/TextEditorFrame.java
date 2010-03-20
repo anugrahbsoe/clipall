@@ -27,6 +27,8 @@ public class TextEditorFrame extends javax.swing.JFrame {
     private JPanel panel;
     private Item item;
 
+    private static TextEditorFrame frame = new TextEditorFrame();
+    
     /** Creates new form TextEditorFrame */
     public TextEditorFrame() {
         panel = new JPanel();
@@ -41,6 +43,10 @@ public class TextEditorFrame extends javax.swing.JFrame {
         }        
     }
 
+    public static TextEditorFrame getInstance(){
+        return frame;
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -53,8 +59,8 @@ public class TextEditorFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jItemField = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Item Text");
+        setAlwaysOnTop(true);
 
         jItemField.setColumns(20);
         jItemField.setRows(5);
@@ -98,7 +104,7 @@ public class TextEditorFrame extends javax.swing.JFrame {
 
         public void actionPerformed(ActionEvent e) {
 
-            hide();
+            setVisible(false);
             item.setItem(jItemField.getText());
             GenericMediator.getInstance().pasteItemWithoutOrder(item);
         }
@@ -126,7 +132,7 @@ public class TextEditorFrame extends javax.swing.JFrame {
     class EscapeKeyActionListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            hide();
+            setVisible(false);
         }
     }
 }
