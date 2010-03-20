@@ -65,7 +65,7 @@ public class AboutFrame extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Product Version : ClipAll 1.3 RC2\n\nhttp://code.google.com/p/clipall\n");
+        jTextArea1.setText("Product Version : ClipAll 1.4 RC2\n\nhttp://code.google.com/p/clipall\n");
         jTextArea1.setFocusable(false);
         jScrollPane1.setViewportView(jTextArea1);
 
