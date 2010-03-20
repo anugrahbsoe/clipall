@@ -20,7 +20,6 @@ import dev.clipall.model.Category;
 import dev.clipall.model.ExtendedItem;
 import dev.clipall.model.GenericModel;
 import dev.clipall.model.Item;
-import dev.clipall.plugins.clipdb.QueryForm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -60,6 +59,7 @@ public class SearchPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         popupMenu = new javax.swing.JPopupMenu();
+        itemBrowser = new javax.swing.JMenuItem();
         itemDir = new javax.swing.JMenuItem();
         itemDiffMerge = new javax.swing.JMenuItem();
         itemSvnDiff = new javax.swing.JMenuItem();
@@ -78,6 +78,15 @@ public class SearchPanel extends javax.swing.JPanel {
         jCategoryDownLabel = new javax.swing.JLabel();
         jButtonNewKategory = new javax.swing.JButton();
         jAllCategoriesSearchCheckBox = new javax.swing.JCheckBox();
+        buttonGoogle = new javax.swing.JButton();
+
+        itemBrowser.setText("Open In Browser");
+        itemBrowser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemBrowserActionPerformed(evt);
+            }
+        });
+        popupMenu.add(itemBrowser);
 
         itemDir.setText("Open Directory");
         itemDir.addActionListener(new java.awt.event.ActionListener() {
@@ -166,6 +175,12 @@ public class SearchPanel extends javax.swing.JPanel {
                 .addComponent(jBookmarkField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jSearchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jSearchFieldKeyPressed(evt);
+            }
+        });
+
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jSearchList.setMaximumSize(new java.awt.Dimension(32767, 32767));
@@ -238,6 +253,17 @@ public class SearchPanel extends javax.swing.JPanel {
             }
         });
 
+        buttonGoogle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/google.png"))); // NOI18N
+        buttonGoogle.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        buttonGoogle.setMaximumSize(new java.awt.Dimension(20, 20));
+        buttonGoogle.setMinimumSize(new java.awt.Dimension(20, 20));
+        buttonGoogle.setPreferredSize(new java.awt.Dimension(20, 20));
+        buttonGoogle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGoogleActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -253,7 +279,10 @@ public class SearchPanel extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jAllCategoriesSearchCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSearchField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jSearchField, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonGoogle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -264,12 +293,12 @@ public class SearchPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonNewKategory, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jAllCategoriesSearchCheckBox))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(jSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jAllCategoriesSearchCheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonGoogle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -373,6 +402,34 @@ public class SearchPanel extends javax.swing.JPanel {
     private void itemReversePasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReversePasteActionPerformed
         GenericMediator.getInstance().enterPressedOnSearchListEvent(true);
     }//GEN-LAST:event_itemReversePasteActionPerformed
+
+    private void itemBrowserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBrowserActionPerformed
+        Item selectedItem = getSelectedItem();
+        if(selectedItem == null){
+            return;
+        }
+        GenericMediator.getInstance().runBrowser(selectedItem.getItem());
+    }//GEN-LAST:event_itemBrowserActionPerformed
+
+    private void buttonGoogleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGoogleActionPerformed
+        if(jSearchField.isFocusOwner()){
+            GenericMediator.getInstance().google(jSearchField.getText());
+        } else {
+
+            Item selectedItem = getSelectedItem();
+            if(selectedItem == null){
+                GenericMediator.getInstance().google(jSearchField.getText());
+            } else {
+                GenericMediator.getInstance().google(selectedItem.getItem());
+            }
+        }
+    }//GEN-LAST:event_buttonGoogleActionPerformed
+
+    private void jSearchFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSearchFieldKeyPressed
+        if(KeyEvent.VK_ENTER == evt.getKeyCode()){
+            GenericMediator.getInstance().google(jSearchField.getText());
+        }
+    }//GEN-LAST:event_jSearchFieldKeyPressed
     
     public boolean isAllCategoriesSearch(){
         return jAllCategoriesSearchCheckBox.isSelected();
@@ -441,6 +498,8 @@ public class SearchPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bookmarkPanel;
+    private javax.swing.JButton buttonGoogle;
+    private javax.swing.JMenuItem itemBrowser;
     private javax.swing.JMenuItem itemCmd;
     private javax.swing.JMenuItem itemDiffMerge;
     private javax.swing.JMenuItem itemDir;
@@ -633,20 +692,5 @@ public class SearchPanel extends javax.swing.JPanel {
                 ||
                (keyCode >= KeyEvent.VK_0 && keyCode <= KeyEvent.VK_9);
     }
-
-    //--------------------------------------------------------------------
-
-    private void setDBPluginListeners() {
-
-        registerKeyboardAction(new DBActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0), WHEN_IN_FOCUSED_WINDOW);
-    }
-
-    class DBActionListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-
-            new QueryForm().runQueryAndDisplay(getSelectedItem().getItem());
-        }
-
-    }
+    
 }

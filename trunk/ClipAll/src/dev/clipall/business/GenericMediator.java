@@ -31,6 +31,7 @@ import java.util.List;
 import dev.utils.collections.Reversed;
 import dev.utils.io.FileHelper;
 import dev.utils.log.Logger;
+import dev.utils.net.URLEncoder;
 import java.util.Arrays;
 
 /**
@@ -255,6 +256,18 @@ public class GenericMediator extends Constants {
         }
     }
 
+    public void runBrowser(String url) {      
+        
+        String command = "cmd /c start /max " + url;
+        try {
+            Runtime.getRuntime().exec(command);
+        } catch (IOException ex) {
+            Logger.getLogger().error("", ex, getClass());
+        }
+        
+        SearchFrame.getInstance().hideSearchFrame();
+    }
+
     public void openDirectory() {
 
         Item selectedItem = SearchPanel.getInstance().getSelectedItem();
@@ -269,5 +282,12 @@ public class GenericMediator extends Constants {
         } catch (IOException ex) {
             Logger.getLogger().error("", ex, getClass());
         }
+    }
+
+    public void google(String textToSearch) {
+        String url = "http://www.google.com/search?q=" + textToSearch;
+        url = URLEncoder.encode(url);
+        //System.out.println("encoded url : " + url);
+        runBrowser(url);
     }
 }

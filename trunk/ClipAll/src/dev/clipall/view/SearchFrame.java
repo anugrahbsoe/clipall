@@ -152,6 +152,11 @@ public class SearchFrame extends javax.swing.JFrame {
         jMenu3.setText("Help");
 
         menuItem_CheckForUpdates.setText("Check for Updates");
+        menuItem_CheckForUpdates.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_CheckForUpdatesActionPerformed(evt);
+            }
+        });
         jMenu3.add(menuItem_CheckForUpdates);
 
         menuItem_About.setText("About");
@@ -215,6 +220,10 @@ public class SearchFrame extends javax.swing.JFrame {
             SearchPanel.getInstance().updateSearchPanelFields();
         }
     }//GEN-LAST:event_menuItem_LoadFromFileActionPerformed
+
+    private void menuItem_CheckForUpdatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_CheckForUpdatesActionPerformed
+        GenericMediator.getInstance().runBrowser(Constants.HOME_PAGE);
+    }//GEN-LAST:event_menuItem_CheckForUpdatesActionPerformed
 
     /**
     * @param args the command line arguments
