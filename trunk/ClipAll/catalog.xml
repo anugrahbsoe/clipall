@@ -2,7 +2,10 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="file:/D:/dev/projects/sprojects/ClipAll/tmp/clipall.xsd" uri="xml-resources/jaxb/jaxb_clipall/clipall.xsd"/>
     <system systemId="file:/D:/dev/projects/sprojects/ClipAll/tmp/dictionary.xsd" uri="xml-resources/jaxb/jaxb_dictionary/dictionary.xsd"/>
+    <system systemId="file:/D:/devdev/projects/sprojects/ClipAll/tmp/tasks.xsd" uri="xml-resources/jaxb/jaxb_tasks/tasks.xsd"/>
 </catalog>
+
+
 
 
 

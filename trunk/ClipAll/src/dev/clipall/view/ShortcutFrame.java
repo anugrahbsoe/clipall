@@ -17,7 +17,6 @@ package dev.clipall.view;
 
 import dev.clipall.Constants;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;

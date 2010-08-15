@@ -41,5 +41,19 @@
         <copy todir="${build.generated.sources.dir}/jaxb">
             <fileset dir="build/generated/jaxbCache/jaxb_dictionary"/>
         </copy>
+        <mkdir dir="build/generated/jaxbCache/jaxb_tasks"/>
+        <xjc package="dev.clipall.model.jaxb.tasks" destdir="build/generated/jaxbCache/jaxb_tasks" catalog="catalog.xml">
+            <classpath>
+                <pathelement location="${src.dir}"/>
+                <pathelement path="${jaxbwiz.xjcrun.classpath}"/>
+            </classpath>
+            <arg value="-xmlschema"/>
+            <schema file="xml-resources/jaxb/jaxb_tasks/tasks.xsd"/>
+            <depends file="xml-resources/jaxb/jaxb_tasks/tasks.xsd"/>
+            <produces dir="build/generated/jaxbCache/jaxb_tasks"/>
+        </xjc>
+        <copy todir="${build.generated.sources.dir}/jaxb">
+            <fileset dir="build/generated/jaxbCache/jaxb_tasks"/>
+        </copy>
     </target>
 </project>
