@@ -5,7 +5,6 @@ import dev.clipall.business.GenericLogic;
 import dev.clipall.business.HotKeyLogic;
 import dev.clipall.business.systray.DefaultSystemTray;
 import dev.clipall.view.SearchFrame;
-import dev.utils.log.Logger;
 
 /**
  *
@@ -18,15 +17,11 @@ public class LogicTest {
         GenericLogic.getInstance().initAppSettings();
         HotKeyLogic.getInstance().initializeHotKeyListener(SearchFrame.getInstance().getTitle());
         ClipboardLogic.getInstance().startToListen();
-        DefaultSystemTray.getInstance().run();
-
-        Logger.getLogger().debug("listening...", LogicTest.class);
-        System.out.println("listening...");
+        DefaultSystemTray.getInstance().run();        
 
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+        } catch (InterruptedException ex) {            
         }
     }
 }

@@ -20,4 +20,14 @@
 		</bindings>
 		<catalog/>
 	</schema>
+	<schema type='-xmlschema' package='dev.clipall.model.jaxb.tasks' name='jaxb_tasks'>
+		<xjc-options>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='xml-resources/jaxb/jaxb_tasks/tasks.xsd' origLocation='tmp/tasks.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
 </schemas>

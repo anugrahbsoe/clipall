@@ -48,6 +48,11 @@ public class Constants {
         public static final String SYSTEM_TRAY_ICON = "/resources/images/console.png";
     }
 
+    public class Tasks {
+
+        public static final String  DEFAULT_TASKS_FILE = "clipall_tasks.xml";
+    }
+
     public class Win32 {
 
         public class Registry {

@@ -87,7 +87,12 @@ public class DefaultClipboardOwner implements ClipboardOwner {
             Logger.getLogger().error("", ex, getClass());
         } catch (IOException ex) {
             Logger.getLogger().error("", ex, getClass());
+        } catch(Exception ex){
+            Logger.getLogger().error("unexpected error in lostOwnership", ex, getClass());
+        } catch(Throwable t){
+            Logger.getLogger().error("unexpected fatal error in lostOwnership", t, getClass());
         }
+        
         regainOwnership(tr);
     }
 

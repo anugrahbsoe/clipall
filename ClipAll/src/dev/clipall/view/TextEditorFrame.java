@@ -14,6 +14,7 @@ import dev.clipall.model.Item;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -89,7 +90,8 @@ public class TextEditorFrame extends javax.swing.JFrame {
     public void setListeners() {
 
         panel.registerKeyboardAction(new EscapeKeyActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JPanel.WHEN_IN_FOCUSED_WINDOW);
-        panel.registerKeyboardAction(new PasteActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), JPanel.WHEN_IN_FOCUSED_WINDOW);
+        panel.registerKeyboardAction(new PasteActionListener(), KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK), JPanel.WHEN_IN_FOCUSED_WINDOW);
+        panel.registerKeyboardAction(new ChangeItemListener(), KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_MASK), JPanel.WHEN_IN_FOCUSED_WINDOW);
     }
 
     public Item getItem() {
@@ -105,11 +107,20 @@ public class TextEditorFrame extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
 
             setVisible(false);
-            item.setItem(jItemField.getText());
-            GenericMediator.getInstance().pasteItemWithoutOrder(item);
+            ExtendedItem extItem = new ExtendedItem(item);
+            extItem.setItem(jItemField.getText());
+            GenericMediator.getInstance().pasteItemWithoutOrder(extItem);
         }
-    }    
-    
+    }
+
+    class ChangeItemListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            setVisible(false);
+            item.setItem(jItemField.getText());            
+        }
+
+    }
 
     public void display(Item item) {
 
@@ -117,7 +128,8 @@ public class TextEditorFrame extends javax.swing.JFrame {
             return;
         }
 
-        this.item = new ExtendedItem(item);
+        //this.item = new ExtendedItem(item);
+        this.item = item;
 
         jItemField.setText(item.getItem());
 

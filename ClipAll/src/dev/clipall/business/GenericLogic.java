@@ -19,6 +19,7 @@ import dev.clipall.Constants;
 import dev.clipall.model.Categories;
 import dev.clipall.model.Category;
 import dev.clipall.model.GenericModel;
+import dev.clipall.model.Tasks;
 import dev.clipall.model.jaxb.dictionary.Dictionary;
 import dev.utils.io.FileHelper;
 import dev.utils.log.Logger;
@@ -59,10 +60,11 @@ public class GenericLogic {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             
         } catch (Exception ex) {
-            Logger.getLogger().error("", ex, GenericLogic.class);
+            //Logger.getLogger().error("", ex, GenericLogic.class);
         }
 
         loadFromXML(Constants.DEFAULT_HISTORY_FILE);
+        loadTasksFromXML(Constants.Tasks.DEFAULT_TASKS_FILE);
 
         loadDictionaries();       
     }
@@ -78,6 +80,12 @@ public class GenericLogic {
         Categories categories = newCategoriesInstance(historyFile);
         GenericModel.getInstance().setCategories(categories);
     }
+
+    public void loadTasksFromXML(String tasksFile){
+
+        Tasks tasks = newTasksInstance(tasksFile);
+        GenericModel.getInstance().setTasks(tasks);
+    }    
 
     public Categories newCategoriesInstance(File historyFile){
 
@@ -115,10 +123,53 @@ public class GenericLogic {
         return newCategoriesInstance(new File(historyFile));
     }
 
+    public Tasks newTasksInstance(String tasksFile){
+
+        Tasks tasks = null;
+
+        try {
+
+            JAXBContext jc = JAXBContext.newInstance("dev.clipall.model.jaxb.tasks");
+            Unmarshaller unmarshaller = jc.createUnmarshaller();
+            JAXBElement jaxbElement = (JAXBElement) unmarshaller.unmarshal(
+                                                new FileInputStream(tasksFile));
+
+            dev.clipall.model.jaxb.tasks.Tasks jaxbTasks =
+                    (dev.clipall.model.jaxb.tasks.Tasks) jaxbElement.getValue();
+
+            tasks = new Tasks(jaxbTasks);
+
+        } catch (Exception ex) {
+            Logger.getLogger().debug("ex: " + ex.toString() + " -- " +
+                                    "default tasks is being created...",
+                                    GenericLogic.class);
+
+            tasks = new Tasks();
+        }
+
+        return tasks;
+    }
+
     private void loadDictionaries() {
 
         LinkedList<Dictionary> dicts = DictionaryLogic.getInstance().loadDictionaries();
         GenericModel.getInstance().setDictionaries(dicts);
+    }
+
+    public void saveTasks(Tasks tasks, File tasksFile){
+
+        if(tasksFile == null){
+            tasksFile = new File(Constants.Tasks.DEFAULT_TASKS_FILE);
+        }
+
+        try {
+            JAXBContext jc = JAXBContext.newInstance(Tasks.class);
+            Marshaller m = jc.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            m.marshal(tasks, tasksFile);
+        } catch (JAXBException ex) {
+            Logger.getLogger().error("", ex, getClass());
+        }
     }
 
     public void save(Categories categories, File historyFile){

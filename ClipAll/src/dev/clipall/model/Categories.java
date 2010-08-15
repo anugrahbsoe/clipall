@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author erol
+ * @author Erol Hira
  */
 
 @XmlRootElement
@@ -36,7 +36,11 @@ public class Categories {
     public Categories(dev.clipall.model.jaxb.Categories categories){
         this();
         setupCategoriesFromJaxb(categories);
-    }
+    }    
+
+    public Categories(LinkedList<Category> categories){
+        this.categories = categories;
+    }    
 
     public Category addNewCategory(Category category){
         
@@ -82,13 +86,7 @@ public class Categories {
             Category category = new Category(jaxbCategory);
             categories.add(category);
         }
-    }
-
-    //------------------------------------------------------
-
-    public Categories(LinkedList<Category> categories){
-        this.categories = categories;
-    }
+    }    
 
     public LinkedList<Category> getCategories() {
         return categories;
@@ -97,5 +95,4 @@ public class Categories {
     public void setCategories(LinkedList<Category> categories) {
         this.categories = categories;
     }
-    
 }

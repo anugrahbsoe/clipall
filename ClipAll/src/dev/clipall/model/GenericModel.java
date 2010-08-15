@@ -33,6 +33,8 @@ public class GenericModel {
     private LinkedList<Dictionary> dictionaries;
     private Dictionary currentDictionary;
 
+    private Tasks tasks;
+
     //------------------------------------------------------
 
     private static GenericModel model = new GenericModel();
@@ -146,6 +148,14 @@ public class GenericModel {
 
     public void setCurrentDictionary(Dictionary currentDictionary) {
         this.currentDictionary = currentDictionary;
+    }
+
+    public Tasks getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Tasks tasks) {
+        this.tasks = tasks;
     }
     
 }
